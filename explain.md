@@ -1,11 +1,11 @@
-#snake-main의 폴더 설명
->src
->*source code를 모아둔 폴더.
->makefile
->*각 소스 파일을 컴파일해서 Object 파일을 생성하고 실행파일 app.out을 생성
->   -prototype은 작성 완료. -lcurses 이전에 src/파일명.cpp를 작성해 소스코드 추가
+# snake-main의 폴더 설명
+> src
+> * source code를 모아둔 폴더.
+> makefile
+> * 각 소스 파일을 컴파일해서 Object 파일을 생성하고 실행파일 app.out을 생성
+>   - prototype은 작성 완료. -lcurses 이전에 src/파일명.cpp를 작성해 소스코드 추가
 
-#ncurses test code
+# ncurses test code
 <details>
 <summary>
 <code> #include <ncurses.h>
@@ -109,3 +109,5 @@ printw 함수 출력전 속성을 키고 끄는 함수이다. 인자로 COLOR_PA
 </summary>
 생성한 서브 WINDOW를 삭제한다.
 </detail>
+
+### 함수 사용 시 여기에 설명 혹은 소스코드에 주석처리
