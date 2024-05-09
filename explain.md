@@ -20,7 +20,7 @@ ncurses 라이브러리를 사용하는 C/C++ 프로그램들의  컴파일을 �
 
 <details>
 <summary>
-<b style="font-size:50px">WINDOW initscr(void); </b>
+<p style="font-size:50px">WINDOW initscr(void); </p>
 </summary>
 <div markdown="1">
 
@@ -31,7 +31,7 @@ initscr() 함수를  반드시 먼저 호출하여 터미널을 초기화하여�
 
 <details>
 <summary>
-<b style="font-size:50px">int printw(const char *fmt, ...); </b>
+<p style="font-size:50px">int printw(const char *fmt, ...); </p>
 </summary>
 <div markdown="1">
 
@@ -42,7 +42,7 @@ stdscr 인 기본 윈도우 내에 (y, x) 위치에 문자열을 출력한다. �
 
 <details>
 <summary>
-<b style="font-size:50px">int move(int y, int x);</b>
+<p style="font-size:50px">int move(int y, int x);</p>
 </summary>
 <div markdown="1">
 
@@ -53,7 +53,7 @@ stdscr 인 기본 윈도우 내에 (y, x) 위치에 문자열을 출력한다. �
 
 <details>
 <summary>
-<b style="font-size:50px">refresh();</b>
+<p style="font-size:50px">refresh();</p>
 </summary>
 <div markdown="1">
 
@@ -66,7 +66,7 @@ stdscr 인 기본 윈도우 내에 (y, x) 위치에 문자열을 출력한다. �
 
 <details>
 <summary>
-<b style="font-size:50px">endwin();</b>
+<p style="font-size:50px">endwin();</p>
 </summary>
 <div markdown="1">
 
@@ -78,7 +78,7 @@ stdscr 인 기본 윈도우 내에 (y, x) 위치에 문자열을 출력한다. �
 
 <details>
 <summary>
-<b style="font-size:50px">int start_color(void);</b>
+<p style="font-size:50px">int start_color(void);</p>
 </summary>
 <div markdown="1">
 
@@ -89,7 +89,7 @@ ncurses에 color attribute 사용 선언
 
 <details>
 <summary>
-<b style="font-size:50px">int init_pair(short pair, short f, short b);</b>
+<p style="font-size:50px">int init_pair(short pair, short f, short b);</p>
 </summary>
 <div markdown="1">
 
@@ -105,7 +105,7 @@ ex) init_pair(1, COLOR_RED, COLOR_WHITE);
 
 <details>
 <summary>
-<b style="font-size:50px">int attron(int attrs);</b>
+<p style="font-size:50px">int attron(int attrs);</p>
 </summary>
 <div markdown="1">
 
@@ -120,7 +120,7 @@ ex) attron(COLOR_PAIR(1))
 
 <details>
 <summary>
-<b style="font-size:50px">int attroff(int attrs);</b>
+<p style="font-size:50px">int attroff(int attrs);</p>
 </summary>
 <div markdown="1">
 
@@ -132,7 +132,7 @@ printw 함수 출력전 속성을 키고 끄는 함수이다. 인자로 COLOR_PA
 
 <details>
 <summary>
-<b style="font-size:50px">box(WINDOW,vertical,horizontal)</b>
+<p style="font-size:50px">box(WINDOW,vertical,horizontal)</p>
 </summary>
 <div markdown="1">
 
@@ -143,7 +143,7 @@ printw 함수 출력전 속성을 키고 끄는 함수이다. 인자로 COLOR_PA
 
 <details>
 <summary>
-<b style="font-size:50px">wbkgd(WINDOW, COLOR_PAIR)</b>
+<p style="font-size:50px">wbkgd(WINDOW, COLOR_PAIR)</p>
 </summary>
 <div markdown="1">
 
@@ -154,7 +154,7 @@ printw 함수 출력전 속성을 키고 끄는 함수이다. 인자로 COLOR_PA
 
 <details>
 <summary>
-<b style="font-size:10px">delwin(WINDOW)</b>
+<p style="font-size:50px">delwin(WINDOW)</p>
 </summary>
 <div markdown="1">
 
