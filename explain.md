@@ -8,7 +8,7 @@
 # ncurses test code
 <details>
 <summary>
-<code> #include <ncurses.h>
+<code> #include &lt; ncurses.h &gt; </code>
 </summary>
 ncurses 라이브러리를 사용하는 C/C++ 프로그램들의  컴파일을 위해 <ncurses.h> 헤더파일을 포함하여야 한다
 </details>
