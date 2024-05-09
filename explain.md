@@ -13,9 +13,32 @@
 > * master에 아예 접근 불가능하게 막아두지는 않았습니다.
 > * 그래도 다른 branch 먼저 사용하고 최종적으로 master에 올렸으면 좋겠습니다.
 
->### Pull request 사용 방법
-> * 소스코드를 변경하고 자신의 branch에 push한다.
-> * 
+## git 명령어 모음
+> * git checkout hyeoksu(or stopkite or master)
+>   - commit하는 branch를 선택합니다.
+
+> * git checkout -b branchname
+>   - branchname이라는 branch를 생성합니다.
+
+> *  git push --set-upstream origin branchname
+>   - 터미널에서 만든 branch를 push해줍니다. 이걸 해야 branch가 적용 완료됩니다.
+
+> * git pull origin branchname (master, hyeoksu, stopkite.. 이 중 하나를 입력)
+>   - branchname의 변경사항을 pull해줍니다.
+
+> * git add .
+>   - 프로젝트 안에 있는 변경사항을 모두 스테이징 해줍니다. 이걸 해야 commit을 할 수 있습니다.
+
+> * git commit "commit name"
+>   - add해준 변경사항들을 commit해줍니다.
+
+> * git push origin branchname
+>   - branchname에 commit을 push해줍니다. master가 아닌 branch에 우선적으로 입력하길 권장합니다.
+
+> * git clone https://github.com/Kookmin-24-cpp-snake/snake-main.git
+>   - 터미널을 열고 clone할 저장소 폴더로 이동합니다 (cd 명령어 사용)
+>   - 위 명령어를 입력합니다.
+>   - push pull 잘못하다가 꼬이면 그냥 기존 로컬 저장소 지우고 clone 해오는게 정신건강에 편합니다...
 
 ## 처음 사용하는 함수는 여기에 설명 혹은 소스코드에 주석처리
 
