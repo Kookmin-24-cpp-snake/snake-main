@@ -10,6 +10,8 @@
 >### .github/PULL_REQUEST_TEMPLET.md
 > * 변경 사항 발생 시 PULL을 요청하고 어떤 것이 변경되었는지 명시
 > * 작성 요령은 PULL_REQUEST_TEMPLET.md 참고
+> * master에 아예 접근 불가능하게 막아두지는 않았습니다.
+> * 그래도 다른 branch 먼저 사용하고 최종적으로 master에 올렸으면 좋겠습니다.
 
 ## 처음 사용하는 함수는 여기에 설명 혹은 소스코드에 주석처리
 
