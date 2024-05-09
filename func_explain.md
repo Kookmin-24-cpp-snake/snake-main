@@ -102,3 +102,5 @@ delwin(WINDOW)
 </summary>
 생성한 서브 WINDOW를 삭제한다.
 </detail>
+
+testpush
