@@ -5,6 +5,7 @@
 > ### makefile
 > * 각 소스 파일을 컴파일해서 Object 파일을 생성하고 실행파일 app.out을 생성
 >   - prototype은 작성 완료. -lcurses 이전에 src/파일명.cpp를 작성해 소스코드 추가
+> * make만 입력하는 것으로 프로그램이 동작하도록 도와준다.
 
 >### .github/PULL_REQUEST_TEMPLET.md
 > * 변경 사항 발생 시 PULL을 요청하고 어떤 것이 변경되었는지 명시
