@@ -1,7 +1,8 @@
 # snake-main의 폴더 설명
-> src
+> ### src
 > * source code를 모아둔 폴더.
-> makefile
+
+> ### makefile
 > * 각 소스 파일을 컴파일해서 Object 파일을 생성하고 실행파일 app.out을 생성
 >   - prototype은 작성 완료. -lcurses 이전에 src/파일명.cpp를 작성해 소스코드 추가
 
