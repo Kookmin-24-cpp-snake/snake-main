@@ -6,6 +6,12 @@
 > * 각 소스 파일을 컴파일해서 Object 파일을 생성하고 실행파일 app.out을 생성
 >   - prototype은 작성 완료. -lcurses 이전에 src/파일명.cpp를 작성해 소스코드 추가
 
+>### .github/PULL_REQUEST_TEMPLET.md
+> * 변경 사항 발생 시 PULL을 요청하고 어떤 것이 변경되었는지 명시
+> * 작성 요령은 PULL_REQUEST_TEMPLET.md 참고
+
+## 처음 사용하는 함수는 여기에 설명 혹은 소스코드에 주석처리
+
 # ncurses test code
 <details>
 <summary>
@@ -173,5 +179,3 @@ printw 함수 출력전 속성을 키고 끄는 함수이다. 인자로 COLOR_PA
 
 </div>
 </details>
-
-## 함수 사용 시 여기에 설명 혹은 소스코드에 주석처리
