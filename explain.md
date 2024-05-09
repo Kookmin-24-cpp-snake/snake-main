@@ -154,7 +154,7 @@ printw 함수 출력전 속성을 키고 끄는 함수이다. 인자로 COLOR_PA
 
 <details>
 <summary>
-<b style="font-size:50px">delwin(WINDOW)</b>
+<b style="font-size:10px">delwin(WINDOW)</b>
 </summary>
 <div markdown="1">
 
