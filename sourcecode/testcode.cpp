@@ -13,6 +13,7 @@ int main(){
     attron(COLOR_PAIR(2));
     wbkgd(win,COLOR_PAIR(2));
     refresh();
+    
 
     getch();
     delwin(win);
