@@ -154,6 +154,17 @@ printw 함수 출력전 속성을 키고 끄는 함수이다. 인자로 COLOR_PA
 
 <details>
 <summary>
+<code>subwin(WINDOW,int,int,int,int)</code>
+</summary>
+<div markdown="1">
+
+서브 WINDOW를 좌표에 맞게 생성한다.
+
+</div>
+</details>
+
+<details>
+<summary>
 <code>delwin(WINDOW)</code>
 </summary>
 <div markdown="1">
