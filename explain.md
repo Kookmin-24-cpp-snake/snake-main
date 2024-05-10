@@ -13,6 +13,10 @@
 > * master에 아예 접근 불가능하게 막아두지는 않았습니다.
 > * 그래도 다른 branch 먼저 사용하고 최종적으로 master에 올렸으면 좋겠습니다.
 
+### Pull request 작성법
+> * 소스코드를 수정하고 자신의 branch에 push까지 합니다.
+> * 
+
 ## git 명령어 모음
 > * git checkout hyeoksu(or stopkite or master)
 >   - commit하는 branch를 선택합니다.
