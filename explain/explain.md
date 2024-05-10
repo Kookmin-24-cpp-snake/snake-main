@@ -22,7 +22,9 @@
 > ![Pullrequest](PR3.png)
 > * 스크롤을 내려주면 코드 변경점도 같이 볼 수 있다.
 > * 다 작성한 뒤 Create pull request를 클릭해준다.
+
 ----
+
 > * PR을 작성하지 않은 다른 사람이 pull request를 확인한다.
 > * snake-main이라는 repo에 들어가보면 좌상단에 pull request가 있다.
 > ![Pullrequest](PR4.png)
