@@ -10,9 +10,34 @@
 >### .github/PULL_REQUEST_TEMPLET.md
 > * 변경 사항 발생 시 PULL을 요청하고 어떤 것이 변경되었는지 명시
 > * 작성 요령은 PULL_REQUEST_TEMPLET.md 참고
+> * master에 아예 접근 불가능하게 막아두지는 않았습니다.
+> * 그래도 다른 branch 먼저 사용하고 최종적으로 master에 올렸으면 좋겠습니다.
+
+>### Pull request 사용 방법
+> * 소스코드를 변경하고 자신의 branch에 push한다.
+> ![Pullrequest](PR1.png)
+> * 그러면 위와 같이 compare & pull request라는게 나온다. 클릭해준다.
+> ![Pullrequest](PR2.png)
+> * 이런 창이 뜨는데 여기에 PULL_REQUEST_TEMPLETE.md에 있는 템플릿을 이용해 PR을 작성한다.
+> ![Pullrequest](PR3.png)
+> * 스크롤을 내려주면 코드 변경점도 같이 볼 수 있다.
+> * 다 작성한 뒤 Create pull request를 클릭해준다.
+
+----
+
+> * PR을 작성하지 않은 다른 사람이 pull request를 확인한다.
+> * snake-main이라는 repo에 들어가보면 좌상단에 pull request가 있다.
+> ![Pullrequest](PR4.png)
+> * 작성된 PR을 확인한다.
+> ![Pullrequest](PR5.png)
+> * files changed 메뉴를 클릭하면 코드의 어떤 점이 변경되었는지 알 수 있다.
+> ![Pullrequest](PR6.png)
+> * 코드에 충돌이 발생하지 않는다면 위와 같은 모습일 것이다. Merge pull request를 누르고 confirm merge를 누른다.
+> * 짠 완성
+> * 코드에 충돌이 발생했거나 코드가 잘 구동되지 않는다면 맨 아래에 있는 Close pull request를 이용해 PR을 반려한다.
 
 ## git 명령어 모음
-> * git checkout branchname (master or develop)
+> * git checkout hyeoksu(or stopkite or master)
 >   - commit하는 branch를 선택합니다.
 
 > * git checkout -b branchname
@@ -21,7 +46,7 @@
 > *  git push --set-upstream origin branchname
 >   - 터미널에서 만든 branch를 push해줍니다. 이걸 해야 branch가 적용 완료됩니다.
 
-> * git pull origin branchname (master, develop)
+> * git pull origin branchname (master, hyeoksu, stopkite.. 이 중 하나를 입력)
 >   - branchname의 변경사항을 pull해줍니다.
 
 > * git add .
