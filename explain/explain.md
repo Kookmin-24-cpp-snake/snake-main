@@ -15,20 +15,20 @@
 
 >### Pull request 사용 방법
 > * 소스코드를 변경하고 자신의 branch에 push한다.
-> * ![Pullrequest](PR1.png)
+> ![Pullrequest](PR1.png)
 > * 그러면 위와 같이 compare & pull request라는게 나온다. 클릭해준다.
-> * ![Pullrequest](PR2.png)
+> ![Pullrequest](PR2.png)
 > * 이런 창이 뜨는데 여기에 PULL_REQUEST_TEMPLETE.md에 있는 템플릿을 이용해 PR을 작성한다.
-> * ![Pullrequest](PR3.png)
+> ![Pullrequest](PR3.png)
 > * 스크롤을 내려주면 코드 변경점도 같이 볼 수 있다.
 > * 다 작성한 뒤 Create pull request를 클릭해준다.
-
+----
 > * PR을 작성하지 않은 다른 사람이 pull request를 확인한다.
 > * snake-main이라는 repo에 들어가보면 좌상단에 pull request가 있다.
-> * ![Pullrequest](PR4.png)
+> ![Pullrequest](PR4.png)
 > * 작성된 PR을 확인한다.
-> * ![Pullrequest](PR5.png)
-> * files changed 메뉴를 클릭하면 코드의 어떤 점이 변경되었는지 알 수 있습니다.
+> ![Pullrequest](PR5.png)
+> * files changed 메뉴를 클릭하면 코드의 어떤 점이 변경되었는지 알 수 있다.
 
 ## git 명령어 모음
 > * git checkout hyeoksu(or stopkite or master)
