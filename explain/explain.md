@@ -35,6 +35,8 @@
 > * 그러면 위와 같이 compare & pull request라는게 나온다. 클릭해준다.
 > ![Pullrequest](PR2.png)
 > * 이런 창이 뜨는데 여기에 PULL_REQUEST_TEMPLETE.md에 있는 템플릿을 이용해 PR을 작성한다.
+> * 주의 : base와 compare 부분을 확인해줘야 한다.
+>   - develop <- working branch, master <- develop 순으로 merge하는 것을 원칙으로 한다.
 > ![Pullrequest](PR3.png)
 > * 스크롤을 내려주면 코드 변경점도 같이 볼 수 있다.
 > * 다 작성한 뒤 Create pull request를 클릭해준다.
