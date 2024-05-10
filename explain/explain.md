@@ -1,3 +1,19 @@
+# Team Project 메뉴얼
+> ### 초기 설정
+> * cmd를 실행한다.
+> * git clone https://github.com/Kookmin-24-cpp-snake/snake-main.git projectname
+> * projectname이라는 이름의 프로젝트에 master branch의 코드의 복사본을 로컬 저장소로 저장한다.
+> (이하 내용은 optional. 만약 이미 작업을 수행하는 branch가 있다면 git checkout branchname으로 생략가능)
+> * github의 snake-main에 들어간 뒤 projects에 들어가보면 snake game milestone을 찾을 수 있다.
+> * snake game milestone의 진행 중 보드에서 자신이 수행할 작업을 클릭한다.
+> * 현재 issue인 작업이 아니라면 convert to issue를 클릭해준다.
+> * 우측에 development라는 메뉴 아래에 파란색 글씨로 Create a branch라 되어 있는 곳을 클릭한다.
+> * Branch name을 수정해주고 branch source는 develop으로 선택, checkout locally를 선택하고 branch를 만든다.
+> * local clone에 다음의 두 명령어를 입력한다
+git fetch origin
+git checkout branchname
+> * 개발 시작!
+
 # snake-main의 폴더 설명
 > ### src
 > * source code를 모아둔 폴더.
@@ -14,7 +30,7 @@
 > * 그래도 다른 branch 먼저 사용하고 최종적으로 master에 올렸으면 좋겠습니다.
 
 >### Pull request 사용 방법
-> * 소스코드를 변경하고 자신의 branch에 push한다.
+> * 소스코드를 변경하고 작업하는 branch에 push한다.
 > ![Pullrequest](PR1.png)
 > * 그러면 위와 같이 compare & pull request라는게 나온다. 클릭해준다.
 > ![Pullrequest](PR2.png)
@@ -34,7 +50,20 @@
 > ![Pullrequest](PR6.png)
 > * 코드에 충돌이 발생하지 않는다면 위와 같은 모습일 것이다. Merge pull request를 누르고 confirm merge를 누른다.
 > * 짠 완성
-> * 코드에 충돌이 발생했거나 코드가 잘 구동되지 않는다면 맨 아래에 있는 Close pull request를 이용해 PR을 반려한다.
+> * 맨 아래에 있는 Close pull request를 이용해 PR을 반려한다.
+
+### PR 중 충돌(conflict) 발생 시 해결 방법
+> * commandline에서 수행
+git checkout develop
+git pull origin develop
+git checkout feacherA(사용하고 있던 branch)
+git merge develop
+> * 그러면 충돌이 발생한 곳이 표시됨.
+> * 팀원과 의논하여 병합할 방법을 선택한다.
+git add .
+git commit "commitname"
+git push origin feacherA
+> * 이 후 다시 Merge pull request 시도
 
 ## git 명령어 모음
 > * git checkout hyeoksu(or stopkite or master)
