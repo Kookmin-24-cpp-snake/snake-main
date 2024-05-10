@@ -31,6 +31,10 @@
 > * 작성된 PR을 확인한다.
 > ![Pullrequest](PR5.png)
 > * files changed 메뉴를 클릭하면 코드의 어떤 점이 변경되었는지 알 수 있다.
+> ![Pullrequest](PR6.png)
+> * 코드에 충돌이 발생하지 않는다면 위와 같은 모습일 것이다. Merge pull request를 누르고 confirm merge를 누른다.
+> * 짠 완성
+> * 코드에 충돌이 발생했거나 코드가 잘 구동되지 않는다면 맨 아래에 있는 Close pull request를 이용해 PR을 반려한다.
 
 ## git 명령어 모음
 > * git checkout hyeoksu(or stopkite or master)
