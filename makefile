@@ -1,2 +1,2 @@
 all:
-	g++ src/testcode.cpp -lncurses -o /tmp/a.out && /tmp/a.out
+	g++ src/showMap.cpp -lncurses -o /tmp/a.out && /tmp/a.out
