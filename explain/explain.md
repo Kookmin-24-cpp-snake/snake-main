@@ -62,9 +62,9 @@
 > * git merge develop
 > * 그러면 충돌이 발생한 곳이 표시됨.
 > * 팀원과 의논하여 병합할 방법을 선택한다.
-git add .
-git commit "commitname"
-git push origin feacherA
+> * git add .
+> * git commit "commitname"
+> * git push origin feacherA
 > * 이 후 다시 Merge pull request 시도
 
 ## git 명령어 모음
