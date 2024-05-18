@@ -1,0 +1,29 @@
+제가 Map 읽어서 창에 띄우는 테스트코드 작성했을 때 쓴 코드입니다. 혹시 나중에 참고할까 해서 놔둡니다.
+    initscr();
+    start_color();
+    init_pair(1,COLOR_RED,COLOR_BLACK);
+    for(int i = 0; i < 23; i++){
+      for(int j = 0; j < 23; j++){
+        switch(readingMap[i][j]){
+            case '0':
+            mvwaddch(stdscr, i, j, ' '|COLOR_PAIR(1));
+            break;
+            case '1':
+            mvwaddch(stdscr, i, j, '-'|COLOR_PAIR(1));
+            break;
+            case '2':
+            mvwaddch(stdscr, i, j, '='|COLOR_PAIR(1));
+            break;
+            case '3':
+            mvwaddch(stdscr, i, j, 'H'|COLOR_PAIR(1));
+            break;
+            case '4':
+            mvwaddch(stdscr, i, j, 'T'|COLOR_PAIR(1));
+            break;
+        }
+      }
+    }
+    refresh();
+    getch();
+    endwin();
+}
