@@ -19,7 +19,7 @@ public:
     ~Map();
     void setDirectory(const string& directory);
     string loadMap();
-    void setMap(const string& mapResource);
+    void setMap();
     void setCoordToValue(int x, int y, int value);
     int getMapValue(int x, int y);
     int getHeight();

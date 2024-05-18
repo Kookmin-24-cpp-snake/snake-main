@@ -41,7 +41,7 @@ string Map::loadMap(){
     return total;
 }
 
-void Map::setMap(const string& mapResource){
+void Map::setMap(){
     string mapResource = loadMap();
     map = new int*[height + 1];
     for (int i = 0; i < height + 1; i++)
