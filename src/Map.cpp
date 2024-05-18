@@ -47,9 +47,9 @@ void Map::setMap(){
     for (int i = 0; i < height + 1; i++)
         map[i] = new int[width + 1];
 
-    for(int i=0;i<23;i++){
-        for(int j=0; mapResource[i * 23 + j] != '\0'; j++){
-            map[i][j] = mapResource[i * 23 + j] - '0';
+    for(int i = 0; i < height + 1; i++){
+        for(int j = 0; j < width; j++){
+            map[i][j] = mapResource[i * (width + 1) + j] - '0';
         }
     }
 }

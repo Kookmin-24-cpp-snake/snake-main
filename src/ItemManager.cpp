@@ -20,13 +20,13 @@ int ItemManager::itemStatus(const Item& item) {
     return map.getMapValue(coord.getX(), coord.getY());
 }
 
-int ItemManager::itemMake() {
+Item ItemManager::itemMake() {
     time_t t = time(NULL);
     srand(t);
     int random = rand() % 2;
     int h = map.getHeight(); int w = map.getWidth();
     int x = rand() % w; int y = rand() % h;
-    map.setCoordToValue(x, y, POISON + random);
+    return Item(POISON+random, x, y);
 }
 
 Pos ItemManager::getItemCoord(const Item& item) {

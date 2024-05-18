@@ -19,7 +19,7 @@ public:
     void itemToMap(const Pos& coord = Pos(0,0), const int& itemType = POISON);
     void itemDelete(const Pos& coord = Pos(0,0));
     int itemStatus(const Item& item);
-    int itemMake();
+    Item itemMake();
     Pos getItemCoord(const Item& item);
 };
 #endif

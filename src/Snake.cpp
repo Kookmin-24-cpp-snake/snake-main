@@ -17,6 +17,10 @@ int Snake::getDirection(){
     return this->direction;
 }
 
+void Snake::setCoord(int x, int y){
+    this->sCoord.setPos(x, y);
+}
+
 Pos Snake::getCoord(){
     return this->sCoord;
 }

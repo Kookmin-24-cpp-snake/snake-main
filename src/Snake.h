@@ -24,6 +24,7 @@ public:
     Snake(int x = 0, int y = 0, int body = 3, int direction = LEFT);
     int getBody();
     int getDirection();
+    void setCoord(int x = 0, int y = 0);
     Pos getCoord();
     void insertDirection(int direction);
     void eatItem(int itemType);
