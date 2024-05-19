@@ -27,7 +27,7 @@ int main() {
     map.setCoordToValue(10, 11, 4);
     map.setCoordToValue(10, 12, 4);
 
-    ItemManager iM;
+    ItemManager iM(map);
     Item item = iM.itemMake();
     map.setCoordToValue(item.getCoord().getX(), item.getCoord().getY(), item.getType());
 
@@ -66,9 +66,7 @@ int main() {
     }
 
     refresh();
-    
     getch();
     endwin();
-
     return 0;
 }

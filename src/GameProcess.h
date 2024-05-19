@@ -1,11 +1,3 @@
-/**
- * @file GameProcess.h
- * @author hyeoksu
- * @brief stage와 main render를 담당하는 클래스
- * Map, Item, Snake
- * @date 2024-05-18
- */
-
 #ifndef __GAMEPROCESS__
 #define __GAMEPROCESS__
 #include "Map.h"
@@ -16,18 +8,24 @@
 #include <thread>
 #include <chrono>
 
-class GameProcess{
+class GameProcess {
     Map map;
     Snake snake;
-    ItemManager itemManager;
-    Item currentItem;
+    Item item1, item2, item3;
     int stage;
     int direction;
+    bool isGameOver;
+    bool keyPressed;
+
 public:
-    GameProcess();
+    GameProcess(int stageNum = 1);
+    void setSnake();
+    string setStage();
+    void setItem();
     void render();
     void update();
-    void handleInput();
+    void keyInput();
     void gameLoop();
+    void gameOver();
 };
 #endif

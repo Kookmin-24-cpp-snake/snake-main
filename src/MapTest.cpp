@@ -41,6 +41,5 @@ int main() {
     refresh();
     getch();
     endwin();
-
     return 0;
 }

@@ -14,12 +14,13 @@
 #include "Item.h"
 
 class ItemManager{
-    Map map;
+    Map& map;
 public:
-    void itemToMap(const Pos& coord = Pos(0,0), const int& itemType = POISON);
-    void itemDelete(const Pos& coord = Pos(0,0));
+    ItemManager(Map& map);
+    void itemToMap(const Item& item);
+    void itemDelete(const Item& item);
     int itemStatus(const Item& item);
-    Item itemMake();
+    Item itemMake(int seed);
     Pos getItemCoord(const Item& item);
 };
 #endif

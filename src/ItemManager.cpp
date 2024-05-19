@@ -7,12 +7,14 @@
 
 #include "ItemManager.h"
 
-void ItemManager::itemToMap(const Pos& coord, const int& itemType){
-    map.setCoordToValue(coord.getX(), coord.getY(), itemType);
+ItemManager::ItemManager(Map& map) : map(map){}
+
+void ItemManager::itemToMap(const Item& item){
+    map.setCoordToValue(item.getCoord().getX(), item.getCoord().getY(), item.getType());
 }
 
-void ItemManager::itemDelete(const Pos& coord) {
-    map.setCoordToValue(coord.getX(), coord.getY(), 0);
+void ItemManager::itemDelete(const Item& item) {
+    map.setCoordToValue(item.getCoord().getX(), item.getCoord().getY(), 0);
 }
 
 int ItemManager::itemStatus(const Item& item) {
@@ -20,12 +22,17 @@ int ItemManager::itemStatus(const Item& item) {
     return map.getMapValue(coord.getX(), coord.getY());
 }
 
-Item ItemManager::itemMake() {
-    time_t t = time(NULL);
-    srand(t);
-    int random = rand() % 2;
-    int h = map.getHeight(); int w = map.getWidth();
-    int x = rand() % w; int y = rand() % h;
+Item ItemManager::itemMake(int seed) {
+    int random, x, y;
+    while(true){
+        time_t t = time(NULL);
+        srand(t + seed);
+        random = rand() % 2;
+        int h = map.getHeight(); int w = map.getWidth();
+        x = rand() % w; y = rand() % h;
+        int value = map.getMapValue(x, y);
+        if (value == 0) break;
+    }
     return Item(POISON+random, x, y);
 }
 

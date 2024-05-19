@@ -16,7 +16,7 @@ class Item{
     int itemType;
     Pos itemCoord;
 public:
-    Item(int type = POISON, Pos coord = Pos());
+    Item(int type, Pos coord);
     Item(int type = POISON, int x = 0, int y = 0);
     int getType() const;
     Pos getCoord() const;
