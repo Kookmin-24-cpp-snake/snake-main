@@ -2,11 +2,27 @@
  * @file Map.h
  * @author hyeoksu
  * @brief 
- * map을 읽어오고 불러오는 함수의 원형
- * @date 2024-05-11
+ * ItemManager 구현을 위해 임시로 만든 Map의 헤더파일입니다.
+ * @date 2024-05-18
  */
-#include "showMap.cpp"
+#ifndef __MAP__
+#define __MAP__
 #include <string>
+#include <fstream>
 using namespace std;
-string loadMap(string& directory);
-void showMap();
+
+class Map{
+    const int height= 22, width = 22;
+    int** map;
+    string directory;
+public:
+    ~Map();
+    void setDirectory(const string& directory);
+    string loadMap();
+    void setMap();
+    void setCoordToValue(int x, int y, int value);
+    int getMapValue(int x, int y);
+    int getHeight();
+    int getWidth();
+};
+#endif
