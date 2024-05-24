@@ -1,6 +1,6 @@
 #include "Snake.h"
 
-Snake::Snake(Pos coord, int bodyLen, int direction) : direction(direction) {
+Snake::Snake(Pos coord, int bodyLen, int direction, int maxLen) : direction(direction) {
     for (int i = 0; i < bodyLen; ++i){
         body.push_back(coord);
         switch (direction) {
@@ -14,6 +14,10 @@ Snake::Snake(Pos coord, int bodyLen, int direction) : direction(direction) {
 
 int Snake::getBodyLen() {
     return this->body.size();
+}
+
+int Snake::maxBodyLen(){
+    return maxLen;
 }
 
 int Snake::getDirection() {

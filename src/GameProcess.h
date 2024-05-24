@@ -4,28 +4,36 @@
 #include "Item.h"
 #include "Snake.h"
 #include "ItemManager.h"
+#include "UIManager.h"
+#include "StageManager.h"
 #include <ncurses.h>
 #include <thread>
 #include <chrono>
 
+class UIManager;
+
 class GameProcess {
+public:
     Map map;
     Snake snake;
     Item item1, item2, item3;
-    int stage;
     int direction;
     bool isGameOver;
-    bool keyPressed;
-
 public:
     GameProcess(int stageNum = 1);
+    bool getIsGameOver();
+    void setIsGameOver(bool tf);
+    int getDirection();
+    void setDirection(int dir);
     void setSnake();
-    string setStage();
+    void initStage(StageManager& stageManager);
+    string setStage(int nowStage);
     void setItem();
-    void render();
-    void update();
-    void keyInput();
-    void gameLoop();
+    void update(StageManager& sm, UIManager& um);
+    void gameLoop(StageManager& sm, UIManager& um);
     void gameOver();
+
+
+    void tmp();
 };
 #endif

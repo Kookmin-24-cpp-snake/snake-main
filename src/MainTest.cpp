@@ -5,6 +5,8 @@
  */
 
 #include "GameProcess.h"
+#include "UIManager.h"
+#include "StageManager.h"
 
 int main() {
     initscr();
@@ -18,6 +20,8 @@ int main() {
     nodelay(stdscr, true);
 
     GameProcess game;
-    game.gameLoop();
+    UIManager um;
+    StageManager sm;
+    game.gameLoop(sm, um);
     return 0;
 }

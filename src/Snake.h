@@ -9,14 +9,18 @@
 #define DOWN 12
 #define LEFT 13
 #define RIGHT 14
-
+ 
 class Snake {
     std::deque<Pos> body;
     int direction;
+    int bodyLen;
+    int maxLen;
 
 public:
-    Snake(Pos coord = Pos(0, 0), int bodyLen = 3, int direction = LEFT);
+    Snake(Pos coord = Pos(0, 0), int bodyLen = 3, int direction = LEFT, int maxLen = 15);
+
     int getBodyLen();
+    int maxBodyLen();
     int getDirection();
     std::deque<Pos> getBody();
     void setCoord(int x = 0, int y = 0);
