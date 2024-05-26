@@ -7,6 +7,8 @@
 
 #include "ItemManager.h"
 
+int seed;
+
 ItemManager::ItemManager(Map& map) : map(map){}
 
 void ItemManager::itemToMap(const Item& item){
@@ -22,7 +24,7 @@ int ItemManager::itemStatus(const Item& item) {
     return map.getMapValue(coord.getX(), coord.getY());
 }
 
-Item ItemManager::itemMake(int seed) {
+Item ItemManager::itemMake() {
     int random, x, y;
     while(true){
         time_t t = time(NULL);
@@ -33,6 +35,7 @@ Item ItemManager::itemMake(int seed) {
         int value = map.getMapValue(x, y);
         if (value == 0) break;
     }
+    seed += 1;
     return Item(POISON+random, x, y);
 }
 

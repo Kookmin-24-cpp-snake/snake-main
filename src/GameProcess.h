@@ -18,11 +18,8 @@ public:
     Snake snake;
     Item item1, item2, item3;
     int direction;
-    bool isGameOver;
 public:
     GameProcess(int stageNum = 1);
-    bool getIsGameOver();
-    void setIsGameOver(bool tf);
     int getDirection();
     void setDirection(int dir);
     void setSnake();
@@ -30,8 +27,10 @@ public:
     string setStage(int nowStage);
     void setItem();
     void update(StageManager& sm, UIManager& um);
+    void checkItemCycle();
+    void checkItemTimeout(Item& item, time_t present);
+    void itemUpdate(StageManager& stageManager, Pos nextHead, int type);
     void gameLoop(StageManager& sm, UIManager& um);
-    void gameOver();
 
 
     void tmp();

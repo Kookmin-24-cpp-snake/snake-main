@@ -122,10 +122,12 @@ bool UIManager::stopOrPlay(StageManager& stageManager) {
                 return true;  
             } else {
                 // 게임 종료
+                delwin(stdscr);
+                endwin();
+                exit(0);
                 return false; 
             }
         }
-        std::this_thread::sleep_for(std::chrono::milliseconds(10));
     }
 }
 
@@ -136,14 +138,14 @@ void UIManager::gameOver(GameProcess& game) {
     nodelay(stdscr, FALSE);
     getch();
     endwin();
+    exit(0);
 }
 
 // 사용자의 키 값 받기
 void UIManager::keyInput(GameProcess& game, Snake& snake) {
     int ch;
-    bool isGameOver = game.getIsGameOver();
 
-    while (!isGameOver) {
+    while (true) {
         ch = getch();
         if (ch != ERR) {
             keyPressed = true;
@@ -166,7 +168,7 @@ void UIManager::keyInput(GameProcess& game, Snake& snake) {
         } else {
             keyPressed = false;
         }
-        std::this_thread::sleep_for(std::chrono::milliseconds(10));
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
     }
 }
 

@@ -6,27 +6,30 @@
  */
 #include "GameProcess.h"
 
-GameProcess::GameProcess(int stageNum) : snake(Pos(10,10) , 3, UP), direction(UP), isGameOver(false){
+GameProcess::GameProcess(int stageNum) : snake(Pos(10,10) , 3, UP), direction(UP){
     string dir = setStage(1);
     map.setDirectory(dir);
     map.setMap();
     setSnake();
-    item1 = ItemManager(map).itemMake(1);
-    item2 = ItemManager(map).itemMake(2);
-    item3 = ItemManager(map).itemMake(3);
+    ItemManager im = ItemManager(map);
+    item1 = im.itemMake();
+    item2 = im.itemMake();
+    item3 = im.itemMake();
     setItem();
 }
 
 void GameProcess::initStage(StageManager& stageManager) {
     int stage = stageManager.getNowStage();
+    snake = Snake(Pos(10, 10), 3, UP);
     stageManager.initNowStage(snake);
     string dir = setStage(stage+1);
     map.setDirectory(dir);
     map.setMap();
     setSnake();
-    item1 = ItemManager(map).itemMake(1);
-    item2 = ItemManager(map).itemMake(2);
-    item3 = ItemManager(map).itemMake(3);
+    ItemManager im = ItemManager(map);
+    item1 = im.itemMake();
+    item2 = im.itemMake();
+    item3 = im.itemMake();
     setItem();
 }
 
@@ -55,36 +58,16 @@ void GameProcess::setItem(){
 }
 
 void GameProcess::update(StageManager& stageManager, UIManager& um) {
+    checkItemCycle();
     Pos nextHead = snake.nextHead();
     switch(map.getMapValue(nextHead.getX(), nextHead.getY())){
         case POISON:{
-            Pos delTail = snake.getTailCoord();
-            map.setCoordToValue(delTail.getX(), delTail.getY(), 0);
-            snake.getBody().pop_back();
-            Item newItem = ItemManager(map).itemMake(3);
-            ItemManager(map).itemToMap(item1);
-
-            // StageManager의 미션 상태 및 현재 점수 업데이트
-            stageManager.updateMissionStatus(2, 1);
-            stageManager.updateNowScore(snake, 2);
+            itemUpdate(stageManager, nextHead, POISON);
             break;
         }
 
         case GROWTH:{
-            Pos newTail = snake.getTailCoord();
-            switch (direction) {
-                case UP: newTail.setPos(newTail.getX(), newTail.getY() + 1); break;
-                case DOWN: newTail.setPos(newTail.getX(), newTail.getY() - 1); break;
-                case LEFT: newTail.setPos(newTail.getX() + 1, newTail.getY()); break;
-                case RIGHT: newTail.setPos(newTail.getX() - 1, newTail.getY()); break;
-            }
-            snake.getBody().push_back(newTail);
-            Item newItem = ItemManager(map).itemMake(1);
-            ItemManager(map).itemToMap(item1);
-            
-            // StageManager의 미션 상태 및 현재 점수 업데이트
-            stageManager.updateMissionStatus(1, 1);
-            stageManager.updateNowScore(snake, 1);
+            itemUpdate(stageManager, nextHead, GROWTH);
             break;
         }
 
@@ -111,13 +94,97 @@ void GameProcess::update(StageManager& stageManager, UIManager& um) {
     }
 }
 
+void GameProcess::checkItemCycle() {
+    time_t present = time(nullptr);
+    
+    // 아이템이 생성된 후의 경과 시간을 계산하여 처리
+    checkItemTimeout(item1, present);
+    checkItemTimeout(item2, present);
+    checkItemTimeout(item3, present);
+}
+
+void GameProcess::checkItemTimeout(Item& item, time_t present) {
+    int timeDifference = static_cast<int>(present - item.getTime());
+    
+    if (timeDifference > 10) {
+        map.setCoordToValue(item.getCoord().getX(), item.getCoord().getY(), 0);
+        ItemManager im = ItemManager(map);
+        item = im.itemMake();
+        im.itemToMap(item);
+    }
+}
+
+void GameProcess::itemUpdate(StageManager& stageManager, Pos nextHead, int type){
+    ItemManager im = ItemManager(map);
+    switch (type){
+        case POISON:{
+        Pos delTail = snake.getTailCoord();
+        map.setCoordToValue(delTail.getX(), delTail.getY(), 0);
+        snake.getBody().pop_back();
+        snake.setBody(snake.getBodyLen() - 1);
+
+        if (nextHead.getPos() == item1.getCoord()){
+            Item& newItem = item1;
+            newItem = im.itemMake();
+            im.itemToMap(newItem);
+        }
+        if (nextHead.getPos() == item2.getCoord()){
+            Item& newItem = item2;
+            newItem = im.itemMake();
+            im.itemToMap(newItem);
+        }
+        if (nextHead.getPos() == item3.getCoord()){
+            Item& newItem = item3;
+            newItem = im.itemMake();
+            im.itemToMap(newItem);
+        }
+        
+        // StageManager의 미션 상태 및 현재 점수 업데이트
+        stageManager.updateMissionStatus(2, 1);
+        stageManager.updateNowScore(snake, 2);
+        }
+        case GROWTH:{
+            Pos newTail = snake.getTailCoord();
+            switch (direction) {
+                case UP: newTail.setPos(newTail.getX(), newTail.getY() + 1); break;
+                case DOWN: newTail.setPos(newTail.getX(), newTail.getY() - 1); break;
+                case LEFT: newTail.setPos(newTail.getX() + 1, newTail.getY()); break;
+                case RIGHT: newTail.setPos(newTail.getX() - 1, newTail.getY()); break;
+            }
+            snake.getBody().push_back(newTail);
+            snake.setBody(snake.getBodyLen() + 1);
+
+            if (nextHead.getPos() == item1.getCoord()){
+                Item& newItem = item1;
+                newItem = im.itemMake();
+                im.itemToMap(newItem);
+            }
+            if (nextHead.getPos() == item2.getCoord()){
+                Item& newItem = item2;
+                newItem = im.itemMake();
+                im.itemToMap(newItem);
+            }
+            if (nextHead.getPos() == item3.getCoord()){
+                Item& newItem = item3;
+                newItem = ItemManager(map).itemMake();
+                im.itemToMap(newItem);
+            }
+            
+            // StageManager의 미션 상태 및 현재 점수 업데이트
+            stageManager.updateMissionStatus(1, 1);
+            stageManager.updateNowScore(snake, 1);
+        }
+    }
+}
+
 void GameProcess::gameLoop(StageManager& sm, UIManager& um) {
     std::thread inputThread([&](){ um.keyInput(*this, snake); });
 
     initStage(sm);
 
-    while (!isGameOver) {
+    while (true) {
         update(sm, um);
+        checkItemCycle();
         um.render(map);
         um.showMissionState(map, sm);
         um.showStage(sm, map);
@@ -127,13 +194,6 @@ void GameProcess::gameLoop(StageManager& sm, UIManager& um) {
 }
 
 // 접근자 설정자
-bool GameProcess::getIsGameOver() {
-    return isGameOver;
-}
-
-void GameProcess::setIsGameOver(bool tf) {
-    isGameOver = tf;
-}
 
 int GameProcess::getDirection() {
     return direction;

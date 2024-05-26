@@ -12,6 +12,10 @@ Snake::Snake(Pos coord, int bodyLen, int direction, int maxLen) : direction(dire
     }
 }
 
+void Snake::setBody(int len){
+    this->bodyLen = len;
+}
+
 int Snake::getBodyLen() {
     return this->body.size();
 }

@@ -9,9 +9,13 @@
 #ifndef __IMANAGER__
 #define __IMANAGER__
 #include <cstdlib>
-#include <ctime>
 #include "Map.h"
 #include "Item.h"
+
+#ifndef __SEED__
+#define __SEED__
+extern int seed; // seed값으로 사용할 int type 전역 변수
+#endif
 
 class ItemManager{
     Map& map;
@@ -20,7 +24,7 @@ public:
     void itemToMap(const Item& item);
     void itemDelete(const Item& item);
     int itemStatus(const Item& item);
-    Item itemMake(int seed);
+    Item itemMake();
     Pos getItemCoord(const Item& item);
 };
 #endif

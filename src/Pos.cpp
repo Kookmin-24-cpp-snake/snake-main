@@ -25,3 +25,7 @@ void Pos::setPos(int x, int y){
     this->x = x;
     this->y = y; 
 }
+
+bool Pos::operator==(const Pos& coord){
+    return ((this->x == coord.x) && (this->y == coord.y));
+}

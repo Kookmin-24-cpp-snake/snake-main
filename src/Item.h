@@ -7,6 +7,7 @@
 
 #ifndef __ITEM__
 #define __ITEM__
+#include <ctime>
 #include "Pos.h"
 
 #define POISON 5
@@ -15,11 +16,14 @@
 class Item{
     int itemType;
     Pos itemCoord;
+    time_t makedTime;
 public:
     Item(int type, Pos coord);
     Item(int type = POISON, int x = 0, int y = 0);
     int getType() const;
     Pos getCoord() const;
+    time_t getTime() const;
     void setItem(int type, Pos coord);
+    void setTime(time_t time);
 };
 #endif

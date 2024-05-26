@@ -16,5 +16,6 @@ public:
     int getX() const;
     int getY() const;
     void setPos(int x , int y);
+    bool operator ==(const Pos& coord);
 };
 #endif
