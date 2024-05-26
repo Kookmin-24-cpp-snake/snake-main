@@ -45,7 +45,7 @@ void UIManager::render(Map& map) {
                 case 0:
                     mvwaddch(stdscr, i, j, ' ' | COLOR_PAIR(1));
                     break;
-                case 1:
+                case WALL:
                     mvwaddch(stdscr, i, j, '-' | COLOR_PAIR(1));
                     break;
                 case 2:
@@ -62,6 +62,9 @@ void UIManager::render(Map& map) {
                     break;
                 case TAIL:
                     mvwaddch(stdscr, i, j, 'T' | COLOR_PAIR(3));
+                    break;
+                case GATE:
+                    mvwaddch(stdscr, i, j, '@' | COLOR_PAIR(4));
                     break;
                 default:
                     mvwaddch(stdscr, i, j, ' ' | COLOR_PAIR(1));

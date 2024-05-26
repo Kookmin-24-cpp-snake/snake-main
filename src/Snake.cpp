@@ -1,18 +1,26 @@
 #include "Snake.h"
 
-Snake::Snake(Pos coord, int bodyLen, int direction, int maxLen) : direction(direction) {
-    for (int i = 0; i < bodyLen; ++i){
+Snake::Snake(Pos coord, int bodyLen, int direction) : direction(direction), maxLen(15){
+    for (int i = 0; i < bodyLen; ++i) {
         body.push_back(coord);
-        switch (direction) {
-            case UP: coord.setPos(coord.getX(), coord.getY() + 1); break;
-            case DOWN: coord.setPos(coord.getX(), coord.getY() - 1); break;
-            case LEFT: coord.setPos(coord.getX() + 1, coord.getY()); break;
-            case RIGHT: coord.setPos(coord.getX() - 1, coord.getY()); break;
-        }
+        moveCoord(coord, direction);
     }
 }
 
-void Snake::setBody(int len){
+void Snake::moveCoord(Pos& coord, int direction) {
+    switch (direction) {
+        case UP: coord.setPos(coord.getX(), coord.getY() + 1); break;
+        case DOWN: coord.setPos(coord.getX(), coord.getY() - 1); break;
+        case LEFT: coord.setPos(coord.getX() + 1, coord.getY()); break;
+        case RIGHT: coord.setPos(coord.getX() - 1, coord.getY()); break;
+    }
+}
+
+std::deque<Pos>& Snake::getBody() {
+    return body;
+}
+
+void Snake::setBodyLen(int len){
     this->bodyLen = len;
 }
 
@@ -26,10 +34,6 @@ int Snake::maxBodyLen(){
 
 int Snake::getDirection() {
     return this->direction;
-}
-
-std::deque<Pos> Snake::getBody() {
-    return body;
 }
 
 void Snake::setCoord(int x, int y) {

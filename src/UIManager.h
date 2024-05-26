@@ -6,6 +6,7 @@
 #include "Snake.h"
 #include "GameProcess.h"
 #include "StageManager.h"
+#include "GateManager.h"
 
 #include <ncurses.h>
 

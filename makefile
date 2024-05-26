@@ -1,5 +1,5 @@
 MainTest:
-	g++ src/MainTest.cpp src/Map.cpp src/Pos.cpp src/Snake.cpp src/Item.cpp src/ItemManager.cpp src/GameProcess.cpp src/UIManager.cpp src/StageManager.cpp src/Stage.cpp -lncurses -o /tmp/a.out && /tmp/a.out
+	g++ src/MainTest.cpp src/Map.cpp src/Pos.cpp src/Snake.cpp src/Item.cpp src/ItemManager.cpp src/GameProcess.cpp src/UIManager.cpp src/StageManager.cpp src/Stage.cpp src/Gate.cpp src/GateManager.cpp -lncurses -o /tmp/a.out && /tmp/a.out
 
 SMITest:
 	g++ src/SMITest.cpp src/Map.cpp src/Pos.cpp src/Snake.cpp src/Item.cpp src/ItemManager.cpp -lncurses -o /tmp/a.out && /tmp/a.out

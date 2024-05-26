@@ -79,7 +79,7 @@ int StageManager::getNowScore() {
 void StageManager::setNowScore(int score) {
     nowScore = score;
 }
- 
+
 void StageManager::updateNowScore(Snake& snake, int scoreType) {
     switch(scoreType) {
         case 0: // 뱀의 몸 길이
