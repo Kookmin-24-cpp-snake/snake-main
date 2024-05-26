@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "thread": "cpp",
-        "deque": "cpp"
+        "deque": "cpp",
+        "chrono": "cpp"
     }
 }

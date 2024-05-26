@@ -31,6 +31,8 @@ public:
     void initializeStage(int stageNum);
     string getStageDirectory(int stageNum);
     void setItemOnMap(const Item& item);
+    void setGateOnMap(const Gate& gate);
+    void setGatesOnMap();
     int getDirection();
     void setDirection(int dir);
     void setSnake();

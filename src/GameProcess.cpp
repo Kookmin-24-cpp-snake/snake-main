@@ -20,6 +20,7 @@ void GameProcess::initializeStage(int stageNum) {
     item3 = im.itemMake();
     gate1 = gm.GateMake();
     gate2 = gm.GateMake();
+    setGatesOnMap();
     setItemsOnMap();
 }
 
@@ -58,6 +59,15 @@ void GameProcess::setItemOnMap(const Item& item) {
     map.setCoordToValue(item.getCoord().getX(), item.getCoord().getY(), item.getType());
 }
 
+void GameProcess::setGatesOnMap() {
+    setGateOnMap(gate1);
+    setGateOnMap(gate2);
+}
+
+void GameProcess::setGateOnMap(const Gate& gate) {
+    map.setCoordToValue(gate.getCoord().getX(), gate.getCoord().getY(), GATE);
+}
+
 void GameProcess::update(StageManager& stageManager, UIManager& um) {
     checkItemCycle();
     checkGateCycle();
@@ -69,7 +79,7 @@ void GameProcess::update(StageManager& stageManager, UIManager& um) {
         itemUpdate(stageManager, nextHead, POISON);
     } else if (mapValue == GROWTH) {
         itemUpdate(stageManager, nextHead, GROWTH);
-    } else if (mapValue == 1) {
+    } else if (mapValue == WALL) {
         um.gameOver(*this);
         return;
     } else if (mapValue == GATE){
@@ -122,7 +132,7 @@ void GameProcess::checkGateCycle() {
 void GameProcess::checkGateTimeout(Gate& gate, time_t present) {
     int timeDifference = static_cast<int>(present - gate.getTime());
     if (timeDifference > 10 && !(gateUsing)) {
-        map.setCoordToValue(gate.getCoord().getX(), gate.getCoord().getY(), 0);
+        map.setCoordToValue(gate.getCoord().getX(), gate.getCoord().getY(), WALL);
         gate = gm.GateMake();
         gm.GateToMap(gate);
     }
@@ -153,45 +163,114 @@ void GameProcess::gateUpdate(StageManager& stageManager, Pos nextHead) {
         snake.getBody().pop_front();
         snake.getBody().push_front(newHead);
     }
+    if (nextHead == gate2.getCoord()){
+        Pos newHead = validDirection(gate1.getCoord());
+        snake.getBody().pop_front();
+        snake.getBody().push_front(newHead);
+    }
 }
 
 Pos GameProcess::validDirection(Pos gateCoord){
     int x = gateCoord.getX(); int y = gateCoord.getY();
     int h = map.getHeight(); int w = map.getWidth();
-    if (x + 1 > w) return Pos(x - 1, y);
-    else if (x - 1 < 0) return Pos(x + 1, y);
-    else if (y + 1 > h) return Pos(x, y - 1);
-    else if (y - 1 < h) return Pos(x, y + 1);
+    if (x + 1 >= w) {
+        setDirection(LEFT);
+        snake.insertDirection(LEFT);
+        return Pos(x - 1, y);
+    }
+    else if (x - 1 < 0){
+        setDirection(RIGHT);
+        snake.insertDirection(RIGHT);
+        return Pos(x + 1, y);
+    }
+    else if (y + 1 >= h){
+        setDirection(UP);
+        snake.insertDirection(UP);
+        return Pos(x, y - 1);
+    }
+    else if (y - 1 < h){
+        setDirection(DOWN);
+        snake.insertDirection(DOWN);
+        return Pos(x, y + 1);
+    }
     else{
         if (direction == UP){
             if (map.getMapValue(x, y - 1) != WALL) return Pos(x, y - 1);
-            else if (map.getMapValue(x + 1, y) != WALL) return Pos(x + 1, y);
-            else if (map.getMapValue(x, y + 1) != WALL) return Pos(x, y + 1);
-            else if (map.getMapValue(x - 1, y) != WALL) return Pos(x - 1, y);
+            else if (map.getMapValue(x + 1, y) != WALL){
+                setDirection(RIGHT);
+                snake.insertDirection(RIGHT);
+                return Pos(x + 1, y);
+            }
+            else if (map.getMapValue(x, y + 1) != WALL){
+                setDirection(DOWN);
+                snake.insertDirection(DOWN);
+                return Pos(x, y + 1);
+            }
+            else if (map.getMapValue(x - 1, y) != WALL) {
+                setDirection(LEFT);
+                snake.insertDirection(LEFT);
+                return Pos(x - 1, y);
+            }
             else return Pos();
         }
 
         else if (direction == DOWN){
             if (map.getMapValue(x, y + 1) != WALL) return Pos(x, y + 1);
-            else if (map.getMapValue(x - 1, y) != WALL) return Pos(x - 1, y);
-            else if (map.getMapValue(x, y - 1) != WALL) return Pos(x, y - 1);
-            else if (map.getMapValue(x + 1, y) != WALL) return Pos(x + 1, y);
+            else if (map.getMapValue(x - 1, y) != WALL){
+                setDirection(LEFT);
+                snake.insertDirection(LEFT);
+                return Pos(x - 1, y);
+            }
+            else if (map.getMapValue(x, y - 1) != WALL){
+                setDirection(UP);
+                snake.insertDirection(UP);
+                return Pos(x, y - 1);
+            }
+            else if (map.getMapValue(x + 1, y) != WALL) {
+                setDirection(RIGHT);
+                snake.insertDirection(RIGHT);
+                return Pos(x + 1, y);
+            }
             else return Pos();
         }
 
         else if (direction == LEFT){
             if (map.getMapValue(x - 1, y) != WALL) return Pos(x - 1, y);
-            else if (map.getMapValue(x, y - 1) != WALL) return Pos(x, y - 1);
-            else if (map.getMapValue(x + 1, y) != WALL) return Pos(x + 1, y);
-            else if (map.getMapValue(x, y + 1) != WALL) return Pos(x, y + 1);
+            else if (map.getMapValue(x, y - 1) != WALL){
+                setDirection(UP);
+                snake.insertDirection(UP);
+                return Pos(x, y - 1);
+            }
+            else if (map.getMapValue(x + 1, y) != WALL) {
+                setDirection(RIGHT);
+                snake.insertDirection(RIGHT);
+                return Pos(x + 1, y);
+            }
+            else if (map.getMapValue(x, y + 1) != WALL) {
+                setDirection(DOWN);
+                snake.insertDirection(DOWN);
+                return Pos(x, y + 1);
+            }
             else return Pos();
         }
 
         else{
             if (map.getMapValue(x + 1, y) != WALL) return Pos(x + 1, y);
-            else if (map.getMapValue(x, y + 1) != WALL) return Pos(x, y + 1);
-            else if (map.getMapValue(x - 1, y) != WALL) return Pos(x - 1, y);
-            else if (map.getMapValue(x, y - 1) != WALL) return Pos(x, y - 1);
+            else if (map.getMapValue(x, y + 1) != WALL) {
+                setDirection(DOWN);
+                snake.insertDirection(DOWN);
+                return Pos(x, y + 1);
+            }
+            else if (map.getMapValue(x - 1, y) != WALL) {
+                setDirection(LEFT);
+                snake.insertDirection(LEFT);
+                return Pos(x - 1, y);
+            }
+            else if (map.getMapValue(x, y - 1) != WALL){
+                setDirection(UP);
+                snake.insertDirection(UP);
+                return Pos(x, y - 1);
+            }
             else return Pos();
         }
     }
@@ -236,6 +315,8 @@ void GameProcess::gameLoop(StageManager& sm, UIManager& um) {
     initStage(sm);
 
     while (true) {
+        checkItemCycle();
+        checkGateCycle();
         update(sm, um);
         um.render(map);
         um.showMissionState(map, sm);
