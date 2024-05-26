@@ -69,8 +69,6 @@ void GameProcess::setGateOnMap(const Gate& gate) {
 }
 
 void GameProcess::update(StageManager& stageManager, UIManager& um) {
-    checkItemCycle();
-    checkGateCycle();
 
     Pos nextHead = snake.nextHead();
     int mapValue = map.getMapValue(nextHead.getX(), nextHead.getY());
