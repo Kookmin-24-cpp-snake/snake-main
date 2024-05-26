@@ -156,14 +156,14 @@ void GameProcess::itemUpdate(StageManager& stageManager, Pos nextHead, int type)
 
 void GameProcess::gateUpdate(StageManager& stageManager, Pos nextHead) {
     gateUsing =true;
+    map.setCoordToValue(snake.getBody().front().getX(), snake.getBody().front().getY(), 0);
+    snake.getBody().pop_front();
     if (nextHead == gate1.getCoord()){
         Pos newHead = validDirection(gate2.getCoord());
-        snake.getBody().pop_front();
         snake.getBody().push_front(newHead);
     }
     if (nextHead == gate2.getCoord()){
         Pos newHead = validDirection(gate1.getCoord());
-        snake.getBody().pop_front();
         snake.getBody().push_front(newHead);
     }
 }
