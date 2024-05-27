@@ -82,6 +82,7 @@ void GameProcess::update(StageManager& stageManager, UIManager& um) {
         return;
     } else if (mapValue == GATE){
         gateSup = snake.getBodyLen();
+        map.setCoordToValue(snake.getBody().front().getX(), snake.getBody().front().getY(), 0);
         gateUpdate(stageManager, nextHead);
     }
 
@@ -156,7 +157,6 @@ void GameProcess::itemUpdate(StageManager& stageManager, Pos nextHead, int type)
 
 void GameProcess::gateUpdate(StageManager& stageManager, Pos nextHead) {
     gateUsing =true;
-    map.setCoordToValue(snake.getBody().front().getX(), snake.getBody().front().getY(), 0);
     snake.getBody().pop_front();
     if (nextHead == gate1.getCoord()){
         Pos newHead = validDirection(gate2.getCoord());
