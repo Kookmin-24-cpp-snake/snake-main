@@ -186,7 +186,7 @@ Pos GameProcess::validDirection(Pos gateCoord){
         snake.insertDirection(UP);
         return Pos(x, y - 1);
     }
-    else if (y - 1 < h){
+    else if (y - 1 < 0){
         setDirection(DOWN);
         snake.insertDirection(DOWN);
         return Pos(x, y + 1);
