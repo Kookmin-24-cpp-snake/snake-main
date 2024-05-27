@@ -84,10 +84,12 @@ void GameProcess::update(StageManager& stageManager, UIManager& um) {
         gateSup = snake.getBodyLen();
         map.setCoordToValue(snake.getBody().front().getX(), snake.getBody().front().getY(), 0);
         gateUpdate(stageManager, nextHead);
+        setSnake();
     }
-
-    moveSnake();
-    setSnake();
+    if (mapValue != GATE){
+        moveSnake();
+        setSnake();
+    }
 
     if (--gateSup == 0) gateUsing = false;
 
@@ -199,15 +201,15 @@ Pos GameProcess::validDirection(Pos gateCoord){
                 snake.insertDirection(RIGHT);
                 return Pos(x + 1, y);
             }
-            else if (map.getMapValue(x, y + 1) != WALL){
-                setDirection(DOWN);
-                snake.insertDirection(DOWN);
-                return Pos(x, y + 1);
-            }
             else if (map.getMapValue(x - 1, y) != WALL) {
                 setDirection(LEFT);
                 snake.insertDirection(LEFT);
                 return Pos(x - 1, y);
+            }
+            else if (map.getMapValue(x, y + 1) != WALL){
+                setDirection(DOWN);
+                snake.insertDirection(DOWN);
+                return Pos(x, y + 1);
             }
             else return Pos();
         }
@@ -219,15 +221,15 @@ Pos GameProcess::validDirection(Pos gateCoord){
                 snake.insertDirection(LEFT);
                 return Pos(x - 1, y);
             }
-            else if (map.getMapValue(x, y - 1) != WALL){
-                setDirection(UP);
-                snake.insertDirection(UP);
-                return Pos(x, y - 1);
-            }
             else if (map.getMapValue(x + 1, y) != WALL) {
                 setDirection(RIGHT);
                 snake.insertDirection(RIGHT);
                 return Pos(x + 1, y);
+            }
+            else if (map.getMapValue(x, y - 1) != WALL){
+                setDirection(UP);
+                snake.insertDirection(UP);
+                return Pos(x, y - 1);
             }
             else return Pos();
         }
@@ -239,15 +241,15 @@ Pos GameProcess::validDirection(Pos gateCoord){
                 snake.insertDirection(UP);
                 return Pos(x, y - 1);
             }
-            else if (map.getMapValue(x + 1, y) != WALL) {
-                setDirection(RIGHT);
-                snake.insertDirection(RIGHT);
-                return Pos(x + 1, y);
-            }
             else if (map.getMapValue(x, y + 1) != WALL) {
                 setDirection(DOWN);
                 snake.insertDirection(DOWN);
                 return Pos(x, y + 1);
+            }
+            else if (map.getMapValue(x + 1, y) != WALL) {
+                setDirection(RIGHT);
+                snake.insertDirection(RIGHT);
+                return Pos(x + 1, y);
             }
             else return Pos();
         }
@@ -259,15 +261,15 @@ Pos GameProcess::validDirection(Pos gateCoord){
                 snake.insertDirection(DOWN);
                 return Pos(x, y + 1);
             }
-            else if (map.getMapValue(x - 1, y) != WALL) {
-                setDirection(LEFT);
-                snake.insertDirection(LEFT);
-                return Pos(x - 1, y);
-            }
             else if (map.getMapValue(x, y - 1) != WALL){
                 setDirection(UP);
                 snake.insertDirection(UP);
                 return Pos(x, y - 1);
+            }
+            else if (map.getMapValue(x - 1, y) != WALL) {
+                setDirection(LEFT);
+                snake.insertDirection(LEFT);
+                return Pos(x - 1, y);
             }
             else return Pos();
         }
