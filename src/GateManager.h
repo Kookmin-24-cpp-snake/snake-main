@@ -11,15 +11,12 @@
 #define __GATEMANAGER__
 #include "Gate.h"
 #include <cstdlib>
+#include <vector>
 #include "Map.h"
-
-#ifndef __GSEED__
-#define __GSEED__
-extern int gateSeed; // seed값으로 사용할 int type 전역 변수
-#endif
 
 class GateManager{
     Map& map;
+    int gateSeed;
 public:
     GateManager(Map& map);
     void GateToMap(const Gate& gate);

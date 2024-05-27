@@ -1,8 +1,8 @@
 #include "GateManager.h"
 
-int gateSeed;
-
-GateManager::GateManager(Map& map) : map(map){}
+GateManager::GateManager(Map& map) : map(map), gateSeed(0){
+    srand(static_cast<unsigned int>(time(NULL)));
+}
 
 void GateManager::GateToMap(const Gate& gate){
     map.setCoordToValue(gate.getCoord().getX(), gate.getCoord().getY(), GATE);
@@ -19,17 +19,28 @@ int GateManager::GateStatus(const Gate& gate) {
 
 Gate GateManager::GateMake() {
     int random, x, y;
-    while(true){
-        time_t t = time(NULL);
-        srand(t + gateSeed);
+        int h = map.getHeight();
+        int w = map.getWidth();
+        std::vector<std::pair<int, int>> emptyPositions;
+
+        // 모든 벽 위치 수집
+        for (int i = 0; i < h; ++i) {
+            for (int j = 0; j < w; ++j) {
+                if (map.getMapValue(i, j) == 1) {
+                    emptyPositions.push_back(std::make_pair(i, j));
+                }
+            }
+        }
+
+        // 무작위로 벽 위치 선택
+        std::pair<int, int> pos = emptyPositions[rand() % emptyPositions.size()];
+        x = pos.first;
+        y = pos.second;
+
         random = rand() % 2;
-        int h = map.getHeight(); int w = map.getWidth();
-        x = rand() % w; y = rand() % h;
-        int value = map.getMapValue(x, y);
-        if (value == 1) break;
-    }
-    gateSeed += 1;
-    return Gate(x, y);
+        gateSeed += 1; // 시드 증가 (다른 곳에서 필요할 경우를 대비)
+
+        return Gate(x, y);
 }
 
 Pos GateManager::getGateCoord(const Gate& gate) {

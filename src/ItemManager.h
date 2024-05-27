@@ -9,16 +9,13 @@
 #ifndef __IMANAGER__
 #define __IMANAGER__
 #include <cstdlib>
+#include <vector>
 #include "Map.h"
 #include "Item.h"
 
-#ifndef __SEED__
-#define __SEED__
-extern int seed; // seed값으로 사용할 int type 전역 변수
-#endif
-
 class ItemManager{
     Map& map;
+    int seed;
 public:
     ItemManager(Map& map);
     void itemToMap(const Item& item);

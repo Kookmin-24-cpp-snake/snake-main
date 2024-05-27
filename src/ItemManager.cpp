@@ -7,9 +7,9 @@
 
 #include "ItemManager.h"
 
-int seed;
-
-ItemManager::ItemManager(Map& map) : map(map){}
+ItemManager::ItemManager(Map& map) : map(map), seed(0){
+    srand(static_cast<unsigned int>(time(NULL)));
+}
 
 void ItemManager::itemToMap(const Item& item){
     map.setCoordToValue(item.getCoord().getX(), item.getCoord().getY(), item.getType());
@@ -25,18 +25,29 @@ int ItemManager::itemStatus(const Item& item) {
 }
 
 Item ItemManager::itemMake() {
-    int random, x, y;
-    while(true){
-        time_t t = time(NULL);
-        srand(t + seed);
+        int random, x, y;
+        int h = map.getHeight();
+        int w = map.getWidth();
+        std::vector<std::pair<int, int>> emptyPositions;
+
+        // 모든 빈 위치 수집
+        for (int i = 0; i < h; ++i) {
+            for (int j = 0; j < w; ++j) {
+                if (map.getMapValue(i, j) == 0) {
+                    emptyPositions.push_back(std::make_pair(i, j));
+                }
+            }
+        }
+
+        // 무작위로 빈 위치 선택
+        std::pair<int, int> pos = emptyPositions[rand() % emptyPositions.size()];
+        x = pos.first;
+        y = pos.second;
+
         random = rand() % 2;
-        int h = map.getHeight(); int w = map.getWidth();
-        x = rand() % w; y = rand() % h;
-        int value = map.getMapValue(x, y);
-        if (value == 0) break;
-    }
-    seed += 1;
-    return Item(POISON+random, x, y);
+        seed += 1; // 시드 증가 (다른 곳에서 필요할 경우를 대비)
+
+        return Item(POISON + random, x, y);
 }
 
 Pos ItemManager::getItemCoord(const Item& item) {
