@@ -137,11 +137,18 @@ bool UIManager::stopOrPlay(StageManager& stageManager) {
 // 게임 오버 시 화면에 렌더링
 void UIManager::gameOver(GameProcess& game) {
     mvprintw(10, 6, "Game Over~!");
-    refresh();
-    nodelay(stdscr, FALSE);
-    getch();
-    endwin();
-    exit(0);
+    mvprintw(11, 4,"Press q to quit");
+    int ch;
+    while (true) {
+        ch = getch();
+        if (ch != ERR) {
+            if (ch == 'q' || ch == 'Q') {
+                delwin(stdscr);
+                endwin();
+                exit(0);
+            }
+        }
+    }
 }
 
 // 사용자의 키 값 받기

@@ -171,22 +171,22 @@ void GameProcess::gateUpdate(StageManager& stageManager, Pos nextHead) {
 Pos GameProcess::validDirection(Pos gateCoord){
     int x = gateCoord.getX(); int y = gateCoord.getY();
     int h = map.getHeight(); int w = map.getWidth();
-    if (x + 1 >= w) {
+    if (x == w - 1) {
         setDirection(LEFT);
         snake.insertDirection(LEFT);
         return Pos(x - 1, y);
     }
-    else if (x - 1 < 0){
+    else if (x == 0){
         setDirection(RIGHT);
         snake.insertDirection(RIGHT);
         return Pos(x + 1, y);
     }
-    else if (y + 1 >= h){
+    else if (y == h - 1){
         setDirection(UP);
         snake.insertDirection(UP);
         return Pos(x, y - 1);
     }
-    else if (y - 1 < 0){
+    else if (y == 0){
         setDirection(DOWN);
         snake.insertDirection(DOWN);
         return Pos(x, y + 1);
@@ -276,7 +276,7 @@ Pos GameProcess::validDirection(Pos gateCoord){
 
 void GameProcess::processPoisonItem(StageManager& stageManager, Pos nextHead) {
     Pos delTail = snake.getTailCoord();
-    map.setCoordToValue(delTail.getX(), delTail.getY(), 0);
+    map.setCoordToValue(delTail.getX(), delTail.getY(), 4);
     snake.getBody().pop_back();
     snake.setBodyLen(snake.getBodyLen() - 1);
 
