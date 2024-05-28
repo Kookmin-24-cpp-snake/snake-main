@@ -20,7 +20,6 @@ void GameProcess::initializeStage(int stageNum) {
     item3 = im.itemMake();
     gate1 = gm.GateMake();
     gate2 = gm.GateMake();
-    setGatesOnMap();
     setItemsOnMap();
 }
 
@@ -73,6 +72,7 @@ void GameProcess::update(StageManager& stageManager, UIManager& um) {
     Pos nextHead = snake.nextHead();
     int mapValue = map.getMapValue(nextHead.getX(), nextHead.getY());
 
+    if (um.getKeyReverse()) um.gameOver(*this);
     if (mapValue == POISON) {
         itemUpdate(stageManager, nextHead, POISON);
     } else if (mapValue == GROWTH) {
@@ -80,7 +80,10 @@ void GameProcess::update(StageManager& stageManager, UIManager& um) {
     } else if (mapValue == WALL) {
         um.gameOver(*this);
         return;
-    } else if (mapValue == GATE){
+    } else if (mapValue == TAIL){
+        um.gameOver(*this);
+    }
+    else if (mapValue == GATE){
         gateSup = snake.getBodyLen();
         map.setCoordToValue(snake.getBody().front().getX(), snake.getBody().front().getY(), 0);
         gateUpdate(stageManager, nextHead);

@@ -14,6 +14,7 @@ class GameProcess;
 
 class UIManager {
     bool keyPressed;
+    bool keyReverse = false;
 public:
     void render(Map& map);
     void gameOver(GameProcess& game);
@@ -21,6 +22,7 @@ public:
     void showMissionState(Map& map, StageManager& stageManager);
     void showStage(StageManager& stageManager, Map& map);
     bool stopOrPlay(StageManager& StageManager);
+    bool getKeyReverse();
 };
 
 #endif

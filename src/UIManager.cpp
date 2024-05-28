@@ -1,5 +1,9 @@
 #include "UIManager.h"
 
+bool UIManager::getKeyReverse(){
+    return this->keyReverse;
+}
+
 // 미션 상태 화면에 렌더링
 void UIManager::showMissionState(Map& map, StageManager& stageManager) {
     int* missionStatus = stageManager.getMissionStatus();
@@ -109,7 +113,7 @@ void UIManager::showStage(StageManager& sm, Map& map) {
 bool UIManager::stopOrPlay(StageManager& stageManager) {
     mvprintw(15, 26, "Clear Stage %d!!", stageManager.getNowStage() + 1);
     mvprintw(16, 26, "Press 'y' to proceed to the next stage.");
-    mvprintw(17, 26, "Press any other key to exit.");
+    mvprintw(17, 26, "Press 'q' to quit.");
 
 
     int ch;
@@ -123,7 +127,7 @@ bool UIManager::stopOrPlay(StageManager& stageManager) {
                 mvprintw(17, 26, "                                                                         ");
 
                 return true;  
-            } else {
+            } else if(ch == 'q' || ch == 'Q'){
                 // 게임 종료
                 delwin(stdscr);
                 endwin();
@@ -163,15 +167,19 @@ void UIManager::keyInput(GameProcess& game, Snake& snake) {
             switch (ch) {
                 case KEY_UP:
                     if (direction != DOWN) game.setDirection(UP);
+                    else keyReverse = true;
                     break;
                 case KEY_DOWN:
                     if (direction != UP) game.setDirection(DOWN);
+                    else keyReverse = true;
                     break;
                 case KEY_LEFT:
                     if (direction != RIGHT) game.setDirection(LEFT);
+                    else keyReverse = true;
                     break;
                 case KEY_RIGHT:
                     if (direction != LEFT) game.setDirection(RIGHT);
+                    else keyReverse = true;
                     break;
             }
             snake.insertDirection(game.getDirection());
