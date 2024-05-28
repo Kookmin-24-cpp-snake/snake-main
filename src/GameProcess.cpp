@@ -278,7 +278,7 @@ Pos GameProcess::validDirection(Pos gateCoord){
 
 void GameProcess::processPoisonItem(StageManager& stageManager, Pos nextHead) {
     Pos delTail = snake.getTailCoord();
-    map.setCoordToValue(delTail.getX(), delTail.getY(), 4);
+    map.setCoordToValue(delTail.getX(), delTail.getY(), 0);
     snake.getBody().pop_back();
     snake.setBodyLen(snake.getBodyLen() - 1);
 
