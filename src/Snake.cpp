@@ -1,7 +1,7 @@
 #include "Snake.h"
 
-Snake::Snake(Pos coord, int bodyLen, int direction) : direction(direction), maxLen(15){
-    for (int i = 0; i < bodyLen; ++i) {
+Snake::Snake(Pos coord, int initBodyLen, int direction) : direction(direction), maxLen(15){
+    for (int i = 0; i < initBodyLen; ++i) {
         body.push_back(coord);
         moveCoord(coord, direction);
     }
@@ -18,10 +18,6 @@ void Snake::moveCoord(Pos& coord, int direction) {
 
 std::deque<Pos>& Snake::getBody() {
     return body;
-}
-
-void Snake::setBodyLen(int len){
-    this->bodyLen = len;
 }
 
 int Snake::getBodyLen() {

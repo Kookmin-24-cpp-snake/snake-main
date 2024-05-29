@@ -30,9 +30,8 @@ bool StageManager::checkMissionClear() {
 // 현재 스테이지의 미션 수행 상태 갱신
 void StageManager::updateMissionStatus(int missionType, int value) {
     switch(missionType) {
-        case 0: missionStatus[0] += value; break;
-        case 1: missionStatus[1] += value; break;
-        case 2: missionStatus[2] += value; break;
+        case 1:missionStatus[1] += value; missionStatus[0] +=1; break;
+        case 2: missionStatus[2] += value; missionStatus[0] -=1; break;
         case 3: missionStatus[3] += value; break;
     }
     updateIsMissionClear();

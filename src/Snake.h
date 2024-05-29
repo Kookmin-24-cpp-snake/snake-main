@@ -13,17 +13,16 @@
 class Snake {
     std::deque<Pos> body;
     int direction;
-    int bodyLen;
+    int initBodyLen;
     int maxLen;
 
 public:
-    Snake(Pos coord = Pos(0, 0), int bodyLen = 3, int direction = LEFT);
+    Snake(Pos coord = Pos(0, 0), int initBodyLen = 3, int direction = LEFT);
     void moveCoord(Pos& coord, int direction);
     int getBodyLen();
     int maxBodyLen();
     int getDirection();
     std::deque<Pos>& getBody();
-    void setBodyLen(int len);
     void setCoord(int x = 0, int y = 0);
     Pos getHeadCoord();
     Pos getTailCoord();
