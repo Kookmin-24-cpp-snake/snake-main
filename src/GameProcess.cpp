@@ -80,8 +80,14 @@ void GameProcess::update(StageManager& stageManager, UIManager& um) {
     if (um.getKeyReverse()) um.gameOver(*this);
     if (mapValue == POISON) {
         itemUpdate(stageManager, nextHead, POISON);
+        moveSnake();
+        setSnake();
     } else if (mapValue == GROWTH) {
         itemUpdate(stageManager, nextHead, GROWTH);
+        moveSnake();
+        Pos newTail = snake.getTailCoord();
+        snake.getBody().push_back(newTail);
+        setSnake();
     } else if (mapValue == WALL) {
         um.gameOver(*this);
         return;
@@ -93,7 +99,7 @@ void GameProcess::update(StageManager& stageManager, UIManager& um) {
         gateUpdate(stageManager, nextHead);
         setSnake();
     }
-    if (mapValue != GATE){
+    else{
         moveSnake();
         setSnake();
     }
@@ -298,15 +304,6 @@ void GameProcess::processPoisonItem(StageManager& stageManager, Pos nextHead) {
 }
 
 void GameProcess::processGrowthItem(StageManager& stageManager, Pos nextHead) {
-    Pos newTail = snake.getTailCoord();
-    switch (direction) {
-        case UP: newTail.setPos(newTail.getX(), newTail.getY() + 1); break;
-        case DOWN: newTail.setPos(newTail.getX(), newTail.getY() - 1); break;
-        case LEFT: newTail.setPos(newTail.getX() + 1, newTail.getY()); break;
-        case RIGHT: newTail.setPos(newTail.getX() - 1, newTail.getY()); break;
-    }
-    snake.getBody().push_back(newTail);
-
     replaceItemIfMatch(item1, nextHead);
     replaceItemIfMatch(item2, nextHead);
     replaceItemIfMatch(item3, nextHead);
