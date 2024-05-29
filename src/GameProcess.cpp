@@ -26,6 +26,7 @@ void GameProcess::initializeStage(int stageNum) {
 void GameProcess::initStage(StageManager& stageManager) {
     int stage = stageManager.getNowStage();
     snake = Snake(Pos(10, 10), 3, UP);
+    direction = UP;
     stageManager.initNowStage(snake);
     initializeStage(stage + 1);
 }
@@ -36,6 +37,10 @@ std::string GameProcess::getStageDirectory(int stage) {
             return "map/map1.txt";
         case 2:
             return "map/map2.txt";
+        case 3:
+            return "map/map3.txt";
+        case 4:
+            return "map/map4.txt";
         default:
             return "map/map1.txt";
     }
@@ -318,9 +323,9 @@ void GameProcess::gameLoop(StageManager& sm, UIManager& um) {
     initStage(sm);
 
     while (true) {
+        update(sm, um);
         checkItemCycle();
         checkGateCycle();
-        update(sm, um);
         um.render(map);
         um.showMissionState(map, sm);
         um.showStage(sm, map);
