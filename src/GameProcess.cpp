@@ -73,6 +73,25 @@ void GameProcess::setGateOnMap(const Gate& gate) {
 }
 
 void GameProcess::update(StageManager& stageManager, UIManager& um) {
+    if (stageManager.checkMissionClear()) {
+        if (stageManager.getNowStage() == 3) {
+            bool isReplay = um.showGameClearPrompt();
+            if (isReplay) {
+                stageManager.setNowStage(0);
+                initStage(stageManager);
+            }
+            
+        }
+        else if (um.stopOrPlay(stageManager)) {
+            stageManager.setNowStage();
+            initStage(stageManager);
+        }
+
+    }
+    if (snake.getBodyLen() < 3) {
+        um.gameOver(*this);
+        return;
+    }
 
     Pos nextHead = snake.nextHead();
     int mapValue = map.getMapValue(nextHead.getX(), nextHead.getY());
@@ -98,6 +117,7 @@ void GameProcess::update(StageManager& stageManager, UIManager& um) {
         gateSup = snake.getBodyLen();
         gateUpdate(stageManager, nextHead);
         setSnake();
+
     }
     else{
         moveSnake();
@@ -106,13 +126,7 @@ void GameProcess::update(StageManager& stageManager, UIManager& um) {
 
     if (--gateSup == 0) gateUsing = false;
 
-    // 미션 완료 시, 다음 스테이지
-    if (stageManager.checkMissionClear()) {
-        if (um.stopOrPlay(stageManager)) {
-            stageManager.setNowStage();
-            initStage(stageManager);
-        }
-    }
+
 }
 
 void GameProcess::moveSnake() {
@@ -182,6 +196,8 @@ void GameProcess::gateUpdate(StageManager& stageManager, Pos nextHead) {
         Pos newHead = validDirection(gate1.getCoord());
         snake.getBody().push_front(newHead);
     }
+    stageManager.updateMissionStatus(3, 1);
+    stageManager.updateNowScore(snake, 3);
 }
 
 Pos GameProcess::validDirection(Pos gateCoord){
@@ -324,17 +340,15 @@ void GameProcess::gameLoop(StageManager& sm, UIManager& um) {
         um.render(map);
         um.showMissionState(map, sm);
         um.showStage(sm, map);
-        std::this_thread::sleep_for(std::chrono::milliseconds(500));
+        std::this_thread::sleep_for(std::chrono::milliseconds(350));
     }
     inputThread.join();
 }
 
 // 접근자 설정자
-
 int GameProcess::getDirection() {
     return direction;
 }
-
 void GameProcess::setDirection(int dir) {
     direction = dir;
 }

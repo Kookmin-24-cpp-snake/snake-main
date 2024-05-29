@@ -20,7 +20,11 @@ public :
     StageManager();
 
     int getNowStage();
+    int getMission(int missionType) {
+        return stage.getMission(nowStage, missionType);
+    }
     void setNowStage();
+    void setNowStage(int s);
 
     int* getMissionStatus();
     bool checkMissionClear();

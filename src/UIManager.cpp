@@ -4,17 +4,17 @@ bool UIManager::getKeyReverse(){
     return this->keyReverse;
 }
 
-// 미션 상태 화면에 렌더링
 void UIManager::showMissionState(Map& map, StageManager& stageManager) {
     int* missionStatus = stageManager.getMissionStatus();
     bool* missionClear = stageManager.getIsMissionClear();
     const char* missionNames[] = {"LENGTH", "GROWTH", "POISON", "GATE"};
+    const char* attribNames[] = {"Type", "Now", "Goal"};
 
     int xOffset = map.getWidth() + 4;
     int yOffset = 0;
-    int boxWidth = 18;
-    int boxHeight = 7;
-    
+    int boxWidth = 22;
+    int boxHeight = 8;
+
     for (int i = 0; i < boxHeight; ++i) {
         for (int j = 0; j < boxWidth; ++j) {
             if (i == 0 || i == boxHeight - 1) {
@@ -31,10 +31,15 @@ void UIManager::showMissionState(Map& map, StageManager& stageManager) {
     mvwaddch(stdscr, yOffset + boxHeight - 1, xOffset, '+');
     mvwaddch(stdscr, yOffset + boxHeight - 1, xOffset + boxWidth - 1, '+');
 
-    mvprintw(yOffset + 1, xOffset + 2, "Mission State:");
-    for (int i = 0; i < 4; ++i) {
-        mvprintw(yOffset + 2 + i, xOffset + 2, "%s: %d [%c]", missionNames[i], missionStatus[i], missionClear[i] ? 'V' : ' ');
+    mvprintw(yOffset + 1, xOffset + 2, "Mission Status:");
+    for (int i = 0; i < 3; ++i) {
+        mvprintw(yOffset + 2, xOffset + 2 + (i * 7), "%s", attribNames[i]);
     }
+    for (int i = 0; i < 4; ++i) {
+        mvprintw(yOffset + 3 + i, xOffset + 2, "%s: %d -> %d [%c]", missionNames[i], missionStatus[i], stageManager.getMission(i), missionClear[i] ? 'V' : ' ');
+    }
+    mvprintw(yOffset + 6, xOffset + 2, "%s  : %d -> %d [%c]", missionNames[3], missionStatus[3], stageManager.getMission(3), missionClear[3] ? 'V' : ' ');
+
 }
 
 // map 화면에 렌더링
@@ -62,10 +67,10 @@ void UIManager::render(Map& map) {
                     mvwaddch(stdscr, i, j, 'G' | COLOR_PAIR(2));
                     break;
                 case HEAD:
-                    mvwaddch(stdscr, i, j, 'H' | COLOR_PAIR(3));
+                    mvwaddch(stdscr, i, j, 'O' | COLOR_PAIR(3));
                     break;
                 case TAIL:
-                    mvwaddch(stdscr, i, j, 'T' | COLOR_PAIR(3));
+                    mvwaddch(stdscr, i, j, 'o' | COLOR_PAIR(3));
                     break;
                 case GATE:
                     mvwaddch(stdscr, i, j, '@' | COLOR_PAIR(4));
@@ -137,6 +142,31 @@ bool UIManager::stopOrPlay(StageManager& stageManager) {
         }
     }
 }
+
+bool UIManager::showGameClearPrompt() {
+        mvprintw(8, 6, "                                          ");
+        mvprintw(9, 4,"====================================       ");
+        mvprintw(10, 6, "You have cleared all the levels!         ");
+        mvprintw(11, 4,"Press 'y' for replay or 'q' to quit       ");
+        mvprintw(12, 4,"====================================      ");
+        mvprintw(13, 6, "                                         ");
+        char userInput;
+        while (true) {
+            userInput = getch();
+            if (userInput == 'y') {
+                mvprintw(10, 6, "                                   ");
+                mvprintw(11, 4,"                                    ");
+                return true;
+            } else if (userInput == 'q') {
+                delwin(stdscr);
+                endwin();
+                exit(0);
+            }
+        }
+    return false;
+}
+
+
 
 // 게임 오버 시 화면에 렌더링
 void UIManager::gameOver(GameProcess& game) {

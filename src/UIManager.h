@@ -22,6 +22,7 @@ public:
     void showMissionState(Map& map, StageManager& stageManager);
     void showStage(StageManager& stageManager, Map& map);
     bool stopOrPlay(StageManager& StageManager);
+    bool showGameClearPrompt();
     bool getKeyReverse();
 };
 

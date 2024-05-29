@@ -30,8 +30,8 @@ bool StageManager::checkMissionClear() {
 // 현재 스테이지의 미션 수행 상태 갱신
 void StageManager::updateMissionStatus(int missionType, int value) {
     switch(missionType) {
-        case 1:missionStatus[1] += value; missionStatus[0] +=1; break;
-        case 2: missionStatus[2] += value; missionStatus[0] -=1; break;
+        case 1: missionStatus[1] += value; missionStatus[0] += 1; break;
+        case 2: missionStatus[2] += value; missionStatus[0] -= 1; break;
         case 3: missionStatus[3] += value; break;
     }
     updateIsMissionClear();
@@ -40,14 +40,15 @@ void StageManager::updateMissionStatus(int missionType, int value) {
 void StageManager::updateIsMissionClear() {
     for(int missionType = 0; missionType < 4; ++missionType) {
         if (stage.getMission(nowStage, missionType) <= missionStatus[missionType]) {
-            isMissionClear[(missionType)] = true;
+            isMissionClear[missionType] = true;
         }
-        else break;
+        else {
+            isMissionClear[missionType] = false; // 게이트 미션 클리어 여부 초기화
+        }
     }
 }
 
-/////////////////////수정필요/////////////////
-// gate 함수 구현 안 돼서 mission[3] = true로 임시 설정
+
 // 현재 스테이지의 미션 상태 초기화
 void StageManager::initNowStage(Snake& snake) {
     nowScore = 0;
@@ -58,9 +59,7 @@ void StageManager::initNowStage(Snake& snake) {
     for (int i = 0; i < 4; ++i)
         isMissionClear[i] = false;
 
-    missionStatus[0] = snake.getBodyLen();
-    isMissionClear[3] = true;
-    
+    missionStatus[0] = snake.getBodyLen();   
 }
 
 // 접근자와 설정자
@@ -103,4 +102,7 @@ int StageManager::getNowStage() {
 }
 void StageManager::setNowStage() {
     nowStage++;
+}
+void StageManager::setNowStage(int s) {
+    nowStage = 0;
 }
