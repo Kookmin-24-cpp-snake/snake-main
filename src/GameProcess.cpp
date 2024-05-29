@@ -6,7 +6,7 @@
 #include "GameProcess.h"
 
 GameProcess::GameProcess(int stageNum)
-    : snake(Pos(10, 10), 3, UP), direction(UP), im(map), gm(map), gateUsing(false), gateSup(-1){
+    : snake(Pos(4, 1), 3, RIGHT), direction(RIGHT), im(map), gm(map), gateUsing(false), gateSup(-1){
     initializeStage(stageNum);
 }
 
@@ -25,8 +25,8 @@ void GameProcess::initializeStage(int stageNum) {
 
 void GameProcess::initStage(StageManager& stageManager) {
     int stage = stageManager.getNowStage();
-    snake = Snake(Pos(10, 10), 3, UP);
-    direction = UP;
+    snake = Snake(Pos(4, 1), 3, RIGHT);
+    direction = RIGHT;
     stageManager.initNowStage(snake);
     initializeStage(stage + 1);
 }
