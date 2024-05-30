@@ -89,5 +89,5 @@
     - 주어진 미션 달성하기
 - 미션
     - 각 점수 항목별로 목표치 도달시 게임 종료
-- 예시
-![Mission](explain/Mission.png)
+    - 예시
+    [Mission](explain/Mission.png)
