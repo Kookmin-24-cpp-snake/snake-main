@@ -1,5 +1,3 @@
----
-
 ## 구성 요소
 
 **wall** - snake head와 접촉시 game over
