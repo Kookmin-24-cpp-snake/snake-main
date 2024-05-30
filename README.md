@@ -91,3 +91,27 @@
     - 각 점수 항목별로 목표치 도달시 게임 종료
     - 예시 : 목표 달성 여부를 v로 표시한다.
         ![Mission](explain/Mission.png)
+
+## 과제 마일스톤  5단계
+
+1. **2차원 배열 snake map을 Game화면으로 표시하는 프로그램 최소 크기는 21x21**
+    1. wall에는 gate가 생성 가능하지만 immune wall에는 gate가 생성 안됨.
+    2. 모서리와 같이 snake가 gate로 들어갈 수 없거나 출구로써 나왔을 때
+       바로 wall과 마주치는 부분은 immune wall 처리가 필요
+2. **snake를 map에 표시하고 화살표 입력에 따라 snake가 움직이는 프로그램** 
+    1. 일정 틱 (0.5초) 간격으로 snake의 위치 이동이 필요
+    2. snake가 정지해있는 틱 (0.5초) 사이에 입력된 키에 따라 snake 진행방향 결정
+    3. 규칙 1 준수
+3. **growth item, poison item 출현**
+    1. item의 수명 결정
+    2. item은 wall과 snake를 제외한 모든 공간에서 출현 가능 → 난수를 이용해서 출현 위치 결정
+    3. 동시 출현할 수 있는 아이템 갯수 3개로 제한
+    4. 규칙 2 준수
+4. **gate 출현**
+    1. gate는 wall에서 무작위로 2개 결정 → 난수를 이용
+    2. gate의 출현 조건(게임 시작 이후 10초 경과 시)
+    3. 규칙 3, 4, 5
+5. **점수 및 미션, stage**
+    1. stage clear 조건 설정
+    2. stage clear시 다음 stage로, stage는 최소 4개, map의 중복은 x
+    3. 규칙 6 준수
