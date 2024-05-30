@@ -154,8 +154,10 @@ bool UIManager::showGameClearPrompt() {
         while (true) {
             userInput = getch();
             if (userInput == 'y') {
+                mvprintw(9, 4,"                                     ");
                 mvprintw(10, 6, "                                   ");
                 mvprintw(11, 4,"                                    ");
+                mvprintw(12, 4,"                                    ");
                 return true;
             } else if (userInput == 'q') {
                 delwin(stdscr);
