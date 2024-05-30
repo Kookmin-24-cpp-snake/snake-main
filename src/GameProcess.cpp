@@ -225,18 +225,22 @@ Pos GameProcess::validDirection(Pos gateCoord){
     }
     else{
         if (direction == UP){
-            if (map.getMapValue(x, y - 1) != WALL) return Pos(x, y - 1);
-            else if (map.getMapValue(x + 1, y) != WALL){
+            if (map.getMapValue(x, y - 1) != WALL
+            && map.getMapValue(x, y - 1) != IMMUNE) return Pos(x, y - 1);
+            else if (map.getMapValue(x + 1, y) != WALL
+            && map.getMapValue(x + 1, y) != IMMUNE){
                 setDirection(RIGHT);
                 snake.insertDirection(RIGHT);
                 return Pos(x + 1, y);
             }
-            else if (map.getMapValue(x - 1, y) != WALL) {
+            else if (map.getMapValue(x - 1, y) != WALL
+            && map.getMapValue(x - 1, y) != IMMUNE) {
                 setDirection(LEFT);
                 snake.insertDirection(LEFT);
                 return Pos(x - 1, y);
             }
-            else if (map.getMapValue(x, y + 1) != WALL){
+            else if (map.getMapValue(x, y + 1) != WALL
+            && map.getMapValue(x, y + 1) != IMMUNE){
                 setDirection(DOWN);
                 snake.insertDirection(DOWN);
                 return Pos(x, y + 1);
@@ -245,18 +249,22 @@ Pos GameProcess::validDirection(Pos gateCoord){
         }
 
         else if (direction == DOWN){
-            if (map.getMapValue(x, y + 1) != WALL) return Pos(x, y + 1);
-            else if (map.getMapValue(x - 1, y) != WALL){
+            if (map.getMapValue(x, y + 1) != WALL
+            && map.getMapValue(x, y + 1) != IMMUNE) return Pos(x, y + 1);
+            else if (map.getMapValue(x - 1, y) != WALL\
+            && map.getMapValue(x - 1, y) != IMMUNE){
                 setDirection(LEFT);
                 snake.insertDirection(LEFT);
                 return Pos(x - 1, y);
             }
-            else if (map.getMapValue(x + 1, y) != WALL) {
+            else if (map.getMapValue(x + 1, y) != WALL
+            && map.getMapValue(x + 1, y) != IMMUNE) {
                 setDirection(RIGHT);
                 snake.insertDirection(RIGHT);
                 return Pos(x + 1, y);
             }
-            else if (map.getMapValue(x, y - 1) != WALL){
+            else if (map.getMapValue(x, y - 1) != WALL
+            && map.getMapValue(x, y - 1) != IMMUNE){
                 setDirection(UP);
                 snake.insertDirection(UP);
                 return Pos(x, y - 1);
@@ -265,18 +273,22 @@ Pos GameProcess::validDirection(Pos gateCoord){
         }
 
         else if (direction == LEFT){
-            if (map.getMapValue(x - 1, y) != WALL) return Pos(x - 1, y);
-            else if (map.getMapValue(x, y - 1) != WALL){
+            if (map.getMapValue(x - 1, y) != WALL
+            && map.getMapValue(x - 1, y) != IMMUNE) return Pos(x - 1, y);
+            else if (map.getMapValue(x, y - 1) != WALL
+            && map.getMapValue(x, y - 1) != IMMUNE){
                 setDirection(UP);
                 snake.insertDirection(UP);
                 return Pos(x, y - 1);
             }
-            else if (map.getMapValue(x, y + 1) != WALL) {
+            else if (map.getMapValue(x, y + 1) != WALL
+            && map.getMapValue(x, y + 1) != IMMUNE) {
                 setDirection(DOWN);
                 snake.insertDirection(DOWN);
                 return Pos(x, y + 1);
             }
-            else if (map.getMapValue(x + 1, y) != WALL) {
+            else if (map.getMapValue(x + 1, y) != WALL
+            && map.getMapValue(x + 1, y) != IMMUNE) {
                 setDirection(RIGHT);
                 snake.insertDirection(RIGHT);
                 return Pos(x + 1, y);
@@ -285,18 +297,22 @@ Pos GameProcess::validDirection(Pos gateCoord){
         }
 
         else{
-            if (map.getMapValue(x + 1, y) != WALL) return Pos(x + 1, y);
-            else if (map.getMapValue(x, y + 1) != WALL) {
+            if (map.getMapValue(x + 1, y) != WALL
+            && map.getMapValue(x + 1, y) != IMMUNE) return Pos(x + 1, y);
+            else if (map.getMapValue(x, y + 1) != WALL
+            && map.getMapValue(x, y + 1) != IMMUNE) {
                 setDirection(DOWN);
                 snake.insertDirection(DOWN);
                 return Pos(x, y + 1);
             }
-            else if (map.getMapValue(x, y - 1) != WALL){
+            else if (map.getMapValue(x, y - 1) != WALL
+            && map.getMapValue(x, y - 1) != IMMUNE){
                 setDirection(UP);
                 snake.insertDirection(UP);
                 return Pos(x, y - 1);
             }
-            else if (map.getMapValue(x - 1, y) != WALL) {
+            else if (map.getMapValue(x - 1, y) != WALL
+            && map.getMapValue(x - 1, y) != IMMUNE) {
                 setDirection(LEFT);
                 snake.insertDirection(LEFT);
                 return Pos(x - 1, y);

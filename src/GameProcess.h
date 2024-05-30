@@ -12,6 +12,7 @@
 #include <chrono>
 
 #define WALL 1
+#define IMMUNE 2
 
 class UIManager;
 

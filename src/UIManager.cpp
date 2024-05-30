@@ -57,7 +57,7 @@ void UIManager::render(Map& map) {
                 case WALL:
                     mvwaddch(stdscr, i, j, '-' | COLOR_PAIR(1));
                     break;
-                case 2:
+                case IMMUNE:
                     mvwaddch(stdscr, i, j, '=' | COLOR_PAIR(1));
                     break;
                 case POISON:
