@@ -22,6 +22,6 @@ public:
     void itemDelete(const Item& item);
     int itemStatus(const Item& item);
     Item itemMake();
-    Pos getItemCoord(const Item& item);
+    Coord getItemCoord(const Item& item);
 };
 #endif

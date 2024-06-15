@@ -45,13 +45,13 @@ public:
     void checkItemTimeout(Item& item, time_t present);
     void checkGateCycle();
     void checkGateTimeout(Gate& gate, time_t present);
-    void itemUpdate(StageManager& stageManager, Pos nextHead, int type);
-    void gateUpdate(StageManager& stageManager, Pos nextHead);
-    Pos validDirection(Pos gate);
+    void itemUpdate(StageManager& stageManager, Coord nextHead, int type);
+    void gateUpdate(StageManager& stageManager, Coord nextHead);
+    Coord validDirection(Coord gate);
     void gameLoop(StageManager& sm, UIManager& um);
-    void replaceItemIfMatch(Item& item, Pos& nextHead);
-    void processPoisonItem(StageManager& stageManager, Pos nextHead);
-    void processGrowthItem(StageManager& stageManager, Pos nextHead);
+    void replaceItemIfMatch(Item& item, Coord& nextHead);
+    void processPoisonItem(StageManager& stageManager, Coord nextHead);
+    void processGrowthItem(StageManager& stageManager, Coord nextHead);
 
     void tmp();
 };

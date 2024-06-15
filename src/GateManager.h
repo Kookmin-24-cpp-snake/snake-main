@@ -23,6 +23,6 @@ public:
     void GateDelete(const Gate& gate);
     int GateStatus(const Gate& gate);
     Gate GateMake();
-    Pos getGateCoord(const Gate& gate);
+    Coord getGateCoord(const Gate& gate);
 };
 #endif

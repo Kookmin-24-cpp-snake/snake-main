@@ -1,31 +1,31 @@
 /**
- * @file Pos.cpp
+ * @file Coord.cpp
  * @author hyeoksu
  * @brief 임시 파일 Pos.h를 위한 소스파일입니다.
  * @date 2024-05-18
  */
 
-#include "Pos.h"
+#include "Coord.h"
 
-Pos::Pos(int x, int y) : x(x), y(y){}
+Coord::Coord(int x, int y) : x(x), y(y){}
 
-Pos Pos::getPos(){
-    return Pos(x,y);
+Coord Coord::getCoord(){
+    return Coord(x,y);
 }
 
-int Pos::getX() const{
+int Coord::getX() const{
     return this->x;
 }
 
-int Pos::getY() const{
+int Coord::getY() const{
     return this->y;
 }
 
-void Pos::setPos(int x, int y){
+void Coord::setCoord(int x, int y){
     this->x = x;
     this->y = y; 
 }
 
-bool Pos::operator==(const Pos& coord){
+bool Coord::operator==(const Coord& coord){
     return ((this->x == coord.x) && (this->y == coord.y));
 }

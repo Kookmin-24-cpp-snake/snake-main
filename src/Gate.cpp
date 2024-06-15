@@ -1,14 +1,14 @@
 #include "Gate.h"
 
-Gate::Gate(Pos coord) : gatePos(coord), makedTime(time(NULL)){}
+Gate::Gate(Coord coord) : gatePos(coord), makedTime(time(NULL)){}
 
-Gate::Gate(int x, int y) : gatePos(Pos(x,y)), makedTime(time(NULL)){}
+Gate::Gate(int x, int y) : gatePos(Coord(x,y)), makedTime(time(NULL)){}
 
-Pos Gate::getCoord() const{
+Coord Gate::getCoord() const{
     return this->gatePos;
 }
 
-void Gate::setGate(Pos coord){
+void Gate::setGate(Coord coord){
     this->gatePos = coord;
 }
 

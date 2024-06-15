@@ -20,7 +20,7 @@ void ItemManager::itemDelete(const Item& item) {
 }
 
 int ItemManager::itemStatus(const Item& item) {
-    Pos coord = item.getCoord();
+    Coord coord = item.getCoord();
     return map.getMapValue(coord.getX(), coord.getY());
 }
 
@@ -50,6 +50,6 @@ Item ItemManager::itemMake() {
         return Item(POISON + random, x, y);
 }
 
-Pos ItemManager::getItemCoord(const Item& item) {
+Coord ItemManager::getItemCoord(const Item& item) {
     return item.getCoord();
 }

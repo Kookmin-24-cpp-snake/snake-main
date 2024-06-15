@@ -2,6 +2,7 @@
     "files.associations": {
         "thread": "cpp",
         "deque": "cpp",
-        "chrono": "cpp"
+        "chrono": "cpp",
+        "vector": "cpp"
     }
 }

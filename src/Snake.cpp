@@ -1,22 +1,22 @@
 #include "Snake.h"
 
-Snake::Snake(Pos coord, int initBodyLen, int direction) : direction(direction), maxLen(15){
+Snake::Snake(Coord coord, int initBodyLen, int direction) : direction(direction), maxLen(15){
     for (int i = 0; i < initBodyLen; ++i) {
         body.push_back(coord);
         moveCoord(coord, direction);
     }
 }
 
-void Snake::moveCoord(Pos& coord, int direction) {
+void Snake::moveCoord(Coord& coord, int direction) {
     switch (direction) {
-        case UP: coord.setPos(coord.getX(), coord.getY() + 1); break;
-        case DOWN: coord.setPos(coord.getX(), coord.getY() - 1); break;
-        case LEFT: coord.setPos(coord.getX() + 1, coord.getY()); break;
-        case RIGHT: coord.setPos(coord.getX() - 1, coord.getY()); break;
+        case UP: coord.setCoord(coord.getX(), coord.getY() + 1); break;
+        case DOWN: coord.setCoord(coord.getX(), coord.getY() - 1); break;
+        case LEFT: coord.setCoord(coord.getX() + 1, coord.getY()); break;
+        case RIGHT: coord.setCoord(coord.getX() - 1, coord.getY()); break;
     }
 }
 
-std::deque<Pos>& Snake::getBody() {
+std::deque<Coord>& Snake::getBody() {
     return body;
 }
 
@@ -33,51 +33,51 @@ int Snake::getDirection() {
 }
 
 void Snake::setCoord(int x, int y) {
-    this->body.front().setPos(x, y);
+    this->body.front().setCoord(x, y);
 }
 
-Pos Snake::getHeadCoord() {
+Coord Snake::getHeadCoord() {
     return this->body.front();
 }
 
-Pos Snake::getTailCoord() {
+Coord Snake::getTailCoord() {
     return this->body.back();
 }
 
 void Snake::move() {
-    Pos newHead = getHeadCoord();
+    Coord newHead = getHeadCoord();
     switch (direction) {
         case UP:
-            newHead.setPos(newHead.getX(), newHead.getY() - 1);
+            newHead.setCoord(newHead.getX(), newHead.getY() - 1);
             break;
         case DOWN:
-            newHead.setPos(newHead.getX(), newHead.getY() + 1);
+            newHead.setCoord(newHead.getX(), newHead.getY() + 1);
             break;
         case LEFT:
-            newHead.setPos(newHead.getX() - 1, newHead.getY());
+            newHead.setCoord(newHead.getX() - 1, newHead.getY());
             break;
         case RIGHT:
-            newHead.setPos(newHead.getX() + 1, newHead.getY());
+            newHead.setCoord(newHead.getX() + 1, newHead.getY());
             break;
     }
     body.push_front(newHead);
     body.pop_back();
 }
 
-Pos Snake::nextHead(){
-    Pos nextHead = getHeadCoord();
+Coord Snake::nextHead(){
+    Coord nextHead = getHeadCoord();
     switch (direction) {
         case UP:
-            nextHead.setPos(nextHead.getX(), nextHead.getY() - 1);
+            nextHead.setCoord(nextHead.getX(), nextHead.getY() - 1);
             break;
         case DOWN:
-            nextHead.setPos(nextHead.getX(), nextHead.getY() + 1);
+            nextHead.setCoord(nextHead.getX(), nextHead.getY() + 1);
             break;
         case LEFT:
-            nextHead.setPos(nextHead.getX() - 1, nextHead.getY());
+            nextHead.setCoord(nextHead.getX() - 1, nextHead.getY());
             break;
         case RIGHT:
-            nextHead.setPos(nextHead.getX() + 1, nextHead.getY());
+            nextHead.setCoord(nextHead.getX() + 1, nextHead.getY());
             break;
     }
     return nextHead;

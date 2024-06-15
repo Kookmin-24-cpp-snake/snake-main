@@ -13,7 +13,7 @@ void GateManager::GateDelete(const Gate& gate) {
 }
 
 int GateManager::GateStatus(const Gate& gate) {
-    Pos coord = gate.getCoord();
+    Coord coord = gate.getCoord();
     return map.getMapValue(coord.getX(), coord.getY());
 }
 
@@ -43,6 +43,6 @@ Gate GateManager::GateMake() {
         return Gate(x, y);
 }
 
-Pos GateManager::getGateCoord(const Gate& gate) {
+Coord GateManager::getGateCoord(const Gate& gate) {
     return gate.getCoord();
 }
