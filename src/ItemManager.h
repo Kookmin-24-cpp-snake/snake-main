@@ -9,13 +9,11 @@
 #ifndef __IMANAGER__
 #define __IMANAGER__
 #include <cstdlib>
-#include <vector>
 #include "Map.h"
 #include "Item.h"
 
 class ItemManager{
     Map& map;
-    int seed;
 public:
     ItemManager(Map& map);
     void itemToMap(const Item& item);

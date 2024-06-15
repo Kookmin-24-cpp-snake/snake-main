@@ -7,7 +7,7 @@
 
 #include "ItemManager.h"
 
-ItemManager::ItemManager(Map& map) : map(map), seed(0){
+ItemManager::ItemManager(Map& map) : map(map){
     srand(static_cast<unsigned int>(time(NULL)));
 }
 
@@ -28,24 +28,13 @@ Item ItemManager::itemMake() {
         int random, x, y;
         int h = map.getHeight();
         int w = map.getWidth();
-        std::vector<std::pair<int, int>> emptyPositions;
+        std::vector<std::pair<int, int>> emptyCoords = map.emptyCoords();
 
-        // 모든 빈 위치 수집
-        for (int i = 0; i < h; ++i) {
-            for (int j = 0; j < w; ++j) {
-                if (map.getMapValue(i, j) == 0) {
-                    emptyPositions.push_back(std::make_pair(i, j));
-                }
-            }
-        }
-
-        // 무작위로 빈 위치 선택
-        std::pair<int, int> pos = emptyPositions[rand() % emptyPositions.size()];
+        std::pair<int, int> pos = emptyCoords[rand() % emptyCoords.size()];
         x = pos.first;
         y = pos.second;
 
         random = rand() % 2;
-        seed += 1; // 시드 증가 (다른 곳에서 필요할 경우를 대비)
 
         return Item(POISON + random, x, y);
 }

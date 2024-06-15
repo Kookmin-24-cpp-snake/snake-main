@@ -7,13 +7,13 @@
 
 #include "Map.h"
 
-void Map::setDirectory(const string& directory){
+void Map::setDirectory(const std::string& directory){
     this->directory = directory;
 }
 
-string Map::loadMap(){
-    string total;
-    ifstream file(directory);
+std::string Map::loadMap(){
+    std::string total;
+    std::ifstream file(directory);
 
     /**
      * @brief 
@@ -21,7 +21,7 @@ string Map::loadMap(){
      */
 	if(file.is_open()){
 		//위치 지정자를 파일 끝으로 옮긴다.
-        file.seekg(0, ios::end);
+        file.seekg(0, std::ios::end);
 		
 		// 그리고 그 위치를 읽는다. (파일의 크기)
 		int size = file.tellg();
@@ -30,7 +30,7 @@ string Map::loadMap(){
 		total.resize(size);
 
 		// 위치 지정자를 다시 파일 맨 앞으로 옮긴다.
-		file.seekg(0, ios::beg);
+		file.seekg(0, std::ios::beg);
 
 		// 파일 전체 내용을 읽어서 문자열에 저장
 		file.read(&total[0], size);
@@ -42,7 +42,7 @@ string Map::loadMap(){
 }
 
 void Map::setMap(){
-    string mapResource = loadMap();
+    std::string mapResource = loadMap();
     map = new int*[height + 1];
     for (int i = 0; i < height + 1; i++)
         map[i] = new int[width + 1];
@@ -76,4 +76,30 @@ int Map::getHeight(){
 
 int Map::getWidth(){
     return this->width;
+}
+
+std::vector<std::pair<int, int>> Map::emptyCoords(){
+    std::vector<std::pair<int, int>> emptyPositions;
+    for (int i = 0; i < height; ++i) {
+        for (int j = 0; j < width; ++j) {
+            if (getMapValue(i, j) == 0) {
+                emptyPositions.push_back(std::make_pair(i, j));
+            }
+        }
+    }
+
+    return emptyPositions;
+}
+
+std::vector<std::pair<int, int>> Map::wallCoords(){
+    std::vector<std::pair<int, int>> wallPositions;
+    for (int i = 0; i < height; ++i) {
+        for (int j = 0; j < width; ++j) {
+            if (getMapValue(i, j) == 1) {
+                wallPositions.push_back(std::make_pair(i, j));
+            }
+        }
+    }
+
+    return wallPositions;
 }

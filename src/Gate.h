@@ -12,7 +12,5 @@ public:
     Gate(int x = 0, int y = 0);
     Coord getCoord() const;
     time_t getTime() const;
-    void setGate(Coord coord);
-    void setTime(time_t time);
 };
 #endif

@@ -30,7 +30,7 @@ public:
 public:
     GameProcess(int stageNum = 1);
     void initializeStage(int stageNum);
-    string getStageDirectory(int stageNum);
+    std::string getStageDirectory(int stageNum);
     void setItemOnMap(const Item& item);
     void setGateOnMap(const Gate& gate);
     void setGatesOnMap();
@@ -52,7 +52,5 @@ public:
     void replaceItemIfMatch(Item& item, Coord& nextHead);
     void processPoisonItem(StageManager& stageManager, Coord nextHead);
     void processGrowthItem(StageManager& stageManager, Coord nextHead);
-
-    void tmp();
 };
 #endif

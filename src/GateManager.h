@@ -16,7 +16,6 @@
 
 class GateManager{
     Map& map;
-    int gateSeed;
 public:
     GateManager(Map& map);
     void GateToMap(const Gate& gate);

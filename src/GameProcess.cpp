@@ -145,7 +145,7 @@ void GameProcess::checkItemCycle() {
 void GameProcess::checkItemTimeout(Item& item, time_t present) {
     int timeDifference = static_cast<int>(present - item.getTime());
     if (timeDifference > 10) {
-        map.setCoordToValue(item.getCoord().getX(), item.getCoord().getY(), 0);
+        im.itemDelete(item);
         item = im.itemMake();
         im.itemToMap(item);
     }
@@ -160,7 +160,7 @@ void GameProcess::checkGateCycle() {
 void GameProcess::checkGateTimeout(Gate& gate, time_t present) {
     int timeDifference = static_cast<int>(present - gate.getTime());
     if (timeDifference > 10 && !(gateUsing)) {
-        map.setCoordToValue(gate.getCoord().getX(), gate.getCoord().getY(), WALL);
+        gm.GateDelete(gate);
         gate = gm.GateMake();
         gm.GateToMap(gate);
     }

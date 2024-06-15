@@ -9,20 +9,22 @@
 #define __MAP__
 #include <string>
 #include <fstream>
-using namespace std;
+#include <vector>
 
 class Map{
     const int height= 22, width = 22;
     int** map;
-    string directory;
+    std::string directory;
 public:
     ~Map();
-    void setDirectory(const string& directory);
-    string loadMap();
+    void setDirectory(const std::string& directory);
+    std::string loadMap();
     void setMap();
     void setCoordToValue(int x, int y, int value);
     int getMapValue(int x, int y);
     int getHeight();
     int getWidth();
+    std::vector<std::pair<int, int>> emptyCoords();
+    std::vector<std::pair<int, int>> wallCoords();
 };
 #endif
