@@ -23,7 +23,5 @@ public:
     int getType() const;
     Coord getCoord() const;
     time_t getTime() const;
-    void setItem(int type, Coord coord);
-    void setTime(time_t time);
 };
 #endif

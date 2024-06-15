@@ -19,15 +19,6 @@ Coord Item::getCoord() const{
     return this->itemCoord;
 }
 
-void Item::setItem(int type, Coord coord){
-    this->itemType = type;
-    this->itemCoord = coord;
-}
-
-void Item::setTime(time_t time){
-    this->makedTime = time;
-}
-
 time_t Item::getTime() const{
     return this->makedTime;
 }

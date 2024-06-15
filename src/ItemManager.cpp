@@ -19,11 +19,6 @@ void ItemManager::itemDelete(const Item& item) {
     map.setCoordToValue(item.getCoord().getX(), item.getCoord().getY(), 0);
 }
 
-int ItemManager::itemStatus(const Item& item) {
-    Coord coord = item.getCoord();
-    return map.getMapValue(coord.getX(), coord.getY());
-}
-
 Item ItemManager::itemMake() {
         int random, x, y;
         int h = map.getHeight();

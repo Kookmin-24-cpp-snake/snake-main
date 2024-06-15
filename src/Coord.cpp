@@ -1,7 +1,7 @@
 /**
  * @file Coord.cpp
  * @author hyeoksu
- * @brief 임시 파일 Pos.h를 위한 소스파일입니다.
+ * @brief 임시 파일 Coord.h를 위한 소스파일입니다.
  * @date 2024-05-18
  */
 

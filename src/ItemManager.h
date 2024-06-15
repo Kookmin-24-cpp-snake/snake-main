@@ -18,7 +18,6 @@ public:
     ItemManager(Map& map);
     void itemToMap(const Item& item);
     void itemDelete(const Item& item);
-    int itemStatus(const Item& item);
     Item itemMake();
     Coord getItemCoord(const Item& item);
 };

@@ -12,11 +12,6 @@ void GateManager::GateDelete(const Gate& gate) {
     map.setCoordToValue(gate.getCoord().getX(), gate.getCoord().getY(), 1);
 }
 
-int GateManager::GateStatus(const Gate& gate) {
-    Coord coord = gate.getCoord();
-    return map.getMapValue(coord.getX(), coord.getY());
-}
-
 Gate GateManager::GateMake() {
     int x, y;
         int h = map.getHeight();

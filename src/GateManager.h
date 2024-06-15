@@ -20,7 +20,6 @@ public:
     GateManager(Map& map);
     void GateToMap(const Gate& gate);
     void GateDelete(const Gate& gate);
-    int GateStatus(const Gate& gate);
     Gate GateMake();
     Coord getGateCoord(const Gate& gate);
 };
