@@ -75,6 +75,9 @@ void UIManager::render(Map& map) {
                 case GATE:
                     mvwaddch(stdscr, i, j, '@' | COLOR_PAIR(4));
                     break;
+                case RANDOM:
+                    mvwaddch(stdscr, i, j, '?' | COLOR_PAIR(COLOR_WHITE));
+                    break;
                 default:
                     mvwaddch(stdscr, i, j, ' ' | COLOR_PAIR(1));
                     break;
@@ -89,7 +92,7 @@ void UIManager::showStage(StageManager& sm, Map& map) {
     int xOffset = map.getWidth() + 4;
     int yOffset = 8;
     int boxWidth = 18;
-    int boxHeight = 4;
+    int boxHeight = 5;
     int stage = sm.getNowStage() + 1;
     int score = sm.getNowScore();
 
@@ -112,6 +115,7 @@ void UIManager::showStage(StageManager& sm, Map& map) {
 
     mvprintw(yOffset + 1, xOffset + 2, "Stage: %d", stage);
     mvprintw(yOffset + 2, xOffset + 2, "Score: %d", score);
+    mvprintw(yOffset + 3, xOffset + 2, "Time: %d", sm.getPlayTime());
 }
 
 
@@ -221,4 +225,3 @@ void UIManager::keyInput(GameProcess& game, Snake& snake) {
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
     }
 }
-

@@ -4,7 +4,7 @@
 #include "StageManager.h"
 
 StageManager::StageManager() : nowStage(0), nowScore(0) {
-    for (int i = 0; i < 4; ++i) {
+    for (int i = 0; i < 4; ++i) { 
         missionStatus[i] = 0;
         isMissionClear[i] = false;
     }
@@ -78,6 +78,11 @@ void StageManager::setNowScore(int score) {
     nowScore = score;
 }
 
+int StageManager::getPlayTime() {
+    return playTime;
+}
+
+
 void StageManager::updateNowScore(Snake& snake, int scoreType) {
     switch(scoreType) {
         case 0: // 뱀의 몸 길이
@@ -92,6 +97,9 @@ void StageManager::updateNowScore(Snake& snake, int scoreType) {
         case 3: // gate
             nowScore += (nowStage+1)*3;
             break;
+        case 4:
+            playTime++;
+            if(playTime%3 == 0) { nowScore++; }
         default:
             break;
     }

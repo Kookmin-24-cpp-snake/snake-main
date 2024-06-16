@@ -12,6 +12,7 @@
 
 #define POISON 5
 #define GROWTH 6
+#define RANDOM -1
 
 class Item{
     int itemType;
