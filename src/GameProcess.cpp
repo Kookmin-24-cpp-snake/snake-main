@@ -2,7 +2,6 @@
  * @file GameProcess.cpp
  * @brief 게임 프로세스 구현 파일
  */
-
 #include "GameProcess.h"
 
 GameProcess::GameProcess(int stageNum)
@@ -29,9 +28,7 @@ void GameProcess::initStage(StageManager& stageManager) {
 }
 
 void GameProcess::setSnake() {
-    for (const Coord &part : snake.getBody()) {
-        map.setCoordToValue(part.getX(), part.getY(), TAIL);
-    }
+    for (const Coord &part : snake.getBody()) map.setCoordToValue(part.getX(), part.getY(), TAIL);
     map.setCoordToValue(snake.getHeadCoord().getX(), snake.getHeadCoord().getY(), HEAD);
 }
 
@@ -58,8 +55,10 @@ void GameProcess::update(StageManager& stageManager, UIManager& um) {
 
     Coord nextHead = snake.nextHead();
     int mapValue = map.getMapValue(nextHead.getX(), nextHead.getY());
-
-    if (um.getKeyReverse()) um.gameOver(*this);
+    if (um.getKeyReverse() || mapValue == WALL || mapValue == TAIL) {
+        um.gameOver(*this);
+        return;
+    }
     if (mapValue == POISON) {
         itemUpdate(stageManager, nextHead, POISON);
         moveSnake();
@@ -70,23 +69,14 @@ void GameProcess::update(StageManager& stageManager, UIManager& um) {
         Coord newTail = snake.getTailCoord();
         snake.getBody().push_back(newTail);
         setSnake();
-    } else if (mapValue == WALL) {
-        um.gameOver(*this);
-        return;
-    } else if (mapValue == TAIL){
-        um.gameOver(*this);
-    }
-    else if (mapValue == GATE){
+    } else if (mapValue == GATE){
         gateSup = snake.getBodyLen();
         gateUpdate(stageManager, nextHead);
         setSnake();
-
-    }
-    else{
+    } else{
         moveSnake();
         setSnake();
     }
-
     if (--gateSup == 0) gateUsing = false;
 }
 
