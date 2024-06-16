@@ -5,6 +5,8 @@
  */
 
 #include "GameProcess.h"
+#include "UIManager.h"
+#include "StageManager.h"
 
 int main() {
     initscr();
@@ -12,12 +14,15 @@ int main() {
     init_pair(1, COLOR_RED, COLOR_BLACK);
     init_pair(2, COLOR_YELLOW, COLOR_BLACK);
     init_pair(3, COLOR_GREEN, COLOR_BLACK);
+    init_pair(4, COLOR_BLUE, COLOR_BLACK);
     keypad(stdscr, TRUE);
     noecho();
     curs_set(0);
     nodelay(stdscr, true);
 
     GameProcess game;
-    game.gameLoop();
+    UIManager um;
+    StageManager sm;
+    game.gameLoop(sm, um);
     return 0;
 }

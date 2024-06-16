@@ -7,35 +7,55 @@
 
 #include "ItemManager.h"
 
-ItemManager::ItemManager(Map& map) : map(map){}
+ItemManager::ItemManager(Map& map) : map(map){
+    srand(static_cast<unsigned int>(time(NULL)));
+}
 
 void ItemManager::itemToMap(const Item& item){
     map.setCoordToValue(item.getCoord().getX(), item.getCoord().getY(), item.getType());
+}
+
+void ItemManager::setItemsOnMap(Item& item1, Item& item2, Item& item3) {
+    itemToMap(item1);
+    itemToMap(item2);
+    itemToMap(item3);
 }
 
 void ItemManager::itemDelete(const Item& item) {
     map.setCoordToValue(item.getCoord().getX(), item.getCoord().getY(), 0);
 }
 
-int ItemManager::itemStatus(const Item& item) {
-    Pos coord = item.getCoord();
-    return map.getMapValue(coord.getX(), coord.getY());
-}
+Item ItemManager::itemMake() {
+        int random, x, y;
+        int h = map.getHeight();
+        int w = map.getWidth();
+        std::vector<std::pair<int, int>> emptyCoords = map.emptyCoords();
 
-Item ItemManager::itemMake(int seed) {
-    int random, x, y;
-    while(true){
-        time_t t = time(NULL);
-        srand(t + seed);
+        std::pair<int, int> pos = emptyCoords[rand() % emptyCoords.size()];
+        x = pos.first;
+        y = pos.second;
+
         random = rand() % 2;
-        int h = map.getHeight(); int w = map.getWidth();
-        x = rand() % w; y = rand() % h;
-        int value = map.getMapValue(x, y);
-        if (value == 0) break;
-    }
-    return Item(POISON+random, x, y);
+
+        return Item(POISON + random, x, y);
 }
 
-Pos ItemManager::getItemCoord(const Item& item) {
+Coord ItemManager::getItemCoord(const Item& item) {
     return item.getCoord();
+}
+
+void ItemManager::checkItemCycle(Item& item1, Item& item2, Item& item3) {
+    time_t present = time(nullptr);
+    checkItemTimeout(item1, present);
+    checkItemTimeout(item2, present);
+    checkItemTimeout(item3, present);
+}
+
+void ItemManager::checkItemTimeout(Item& item, time_t present) {
+    int timeDifference = static_cast<int>(present - item.getTime());
+    if (timeDifference > 10) {
+        itemDelete(item);
+        item = itemMake();
+        itemToMap(item);
+    }
 }

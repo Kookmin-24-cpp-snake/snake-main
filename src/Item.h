@@ -7,19 +7,21 @@
 
 #ifndef __ITEM__
 #define __ITEM__
-#include "Pos.h"
+#include <ctime>
+#include "Coord.h"
 
 #define POISON 5
 #define GROWTH 6
 
 class Item{
     int itemType;
-    Pos itemCoord;
+    Coord itemCoord;
+    time_t makedTime;
 public:
-    Item(int type, Pos coord);
+    Item(int type, Coord coord);
     Item(int type = POISON, int x = 0, int y = 0);
     int getType() const;
-    Pos getCoord() const;
-    void setItem(int type, Pos coord);
+    Coord getCoord() const;
+    time_t getTime() const;
 };
 #endif

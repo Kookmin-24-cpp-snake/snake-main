@@ -1,168 +1,231 @@
 /**
  * @file GameProcess.cpp
- * @author hyeoksu
- * @brief 테스트를 위해 임시로 만들었당
- * @date 2024-05-18
+ * @brief 게임 프로세스 구현 파일
  */
 #include "GameProcess.h"
 
-GameProcess::GameProcess(int stageNum) : snake(Pos(10,10) , 3, UP), direction(UP), isGameOver(false), keyPressed(false), stage(stageNum){
-    string dir = setStage();
+GameProcess::GameProcess(int stageNum)
+    : snake(Coord(4, 1), 3, RIGHT), direction(RIGHT), im(map), gm(map), gateUsing(false), gateSup(-1){
+    initializeStage(stageNum);
+}
+
+void GameProcess::initializeStage(int stageNum) {
+    std::string dir = map.getStageDirectory(stageNum);
     map.setDirectory(dir);
     map.setMap();
     setSnake();
-    item1 = ItemManager(map).itemMake(1);
-    item2 = ItemManager(map).itemMake(2);
-    item3 = ItemManager(map).itemMake(3);
-    setItem();
+    item1 = im.itemMake(); item2 = im.itemMake(); item3 = im.itemMake();
+    gate1 = Gate(); gate2 = Gate();
+    im.setItemsOnMap(item1, item2, item3);
 }
 
-string GameProcess::setStage(){
-    switch(stage){
-        case 1:
-        return "map/map1.txt";
-        case 2:
-        return "map/map2.txt";
-        default:
-        return "map/map1.txt";
-    }
+void GameProcess::initStage(StageManager& stageManager) {
+    int stage = stageManager.getNowStage();
+    snake = Snake(Coord(4, 1), 3, RIGHT);
+    direction = RIGHT;
+    stageManager.initNowStage(snake);
+    initializeStage(stage + 1);
 }
 
 void GameProcess::setSnake() {
-    for (const Pos &part : snake.getBody()) {
-        map.setCoordToValue(part.getX(), part.getY(), TAIL);
-    }
+    for (const Coord &part : snake.getBody()) map.setCoordToValue(part.getX(), part.getY(), TAIL);
     map.setCoordToValue(snake.getHeadCoord().getX(), snake.getHeadCoord().getY(), HEAD);
 }
 
-void GameProcess::setItem(){
-    map.setCoordToValue(item1.getCoord().getX(), item1.getCoord().getY(), item1.getType());
-    map.setCoordToValue(item2.getCoord().getX(), item2.getCoord().getY(), item2.getType());
-    map.setCoordToValue(item3.getCoord().getX(), item3.getCoord().getY(), item3.getType());
-}
-
-void GameProcess::render() {
-    int height = map.getHeight();
-    int width = map.getWidth();
-
-    for (int i = 0; i < height; ++i) {
-        for (int j = 0; j < width; ++j) {
-            int value = map.getMapValue(j, i);
-            switch (value) {
-                case 0:
-                    mvwaddch(stdscr, i, j, ' ' | COLOR_PAIR(1));
-                    break;
-                case 1:
-                    mvwaddch(stdscr, i, j, '-' | COLOR_PAIR(1));
-                    break;
-                case 2:
-                    mvwaddch(stdscr, i, j, '=' | COLOR_PAIR(1));
-                    break;
-                case POISON:
-                    mvwaddch(stdscr, i, j, 'P' | COLOR_PAIR(2));
-                    break;
-                case GROWTH:
-                    mvwaddch(stdscr, i, j, 'G' | COLOR_PAIR(2));
-                    break;
-                case HEAD:
-                    mvwaddch(stdscr, i, j, 'H' | COLOR_PAIR(3));
-                    break;
-                case TAIL:
-                    mvwaddch(stdscr, i, j, 'T' | COLOR_PAIR(3));
-                    break;
-                default:
-                    mvwaddch(stdscr, i, j, ' ' | COLOR_PAIR(1));
-                    break;
+void GameProcess::update(StageManager& stageManager, UIManager& um) {
+    if (stageManager.checkMissionClear()) {
+        if (stageManager.getNowStage() == 3) {
+            bool isReplay = um.showGameClearPrompt();
+            if (isReplay) {
+                stageManager.setNowStage(0);
+                initStage(stageManager);
             }
+            
         }
+        else if (um.stopOrPlay(stageManager)) {
+            stageManager.setNowStage();
+            initStage(stageManager);
+        }
+
     }
-    refresh();
+    if (snake.getBodyLen() < 3) {
+        um.gameOver(*this);
+        return;
+    }
+
+    Coord nextHead = snake.nextHead();
+    int mapValue = map.getMapValue(nextHead.getX(), nextHead.getY());
+    if (um.getKeyReverse() || mapValue == WALL || mapValue == TAIL) {
+        um.gameOver(*this);
+        return;
+    }
+    if (mapValue == POISON) {
+        itemUpdate(stageManager, nextHead, POISON);
+        moveSnake();
+        setSnake();
+    } else if (mapValue == GROWTH) {
+        itemUpdate(stageManager, nextHead, GROWTH);
+        moveSnake();
+        Coord newTail = snake.getTailCoord();
+        snake.getBody().push_back(newTail);
+        setSnake();
+    } else if (mapValue == GATE){
+        gateSup = snake.getBodyLen();
+        gateUpdate(stageManager, nextHead);
+        setSnake();
+    } else{
+        moveSnake();
+        setSnake();
+    }
+    if (--gateSup == 0) gateUsing = false;
 }
 
-void GameProcess::update() {
-    Pos nextHead = snake.nextHead();
-    switch(map.getMapValue(nextHead.getX(), nextHead.getY())){
-        case POISON:{
-        Pos delTail = snake.getTailCoord();
-        map.setCoordToValue(delTail.getX(), delTail.getY(), 0);
-        snake.getBody().pop_back();
-        Item newItem = ItemManager(map).itemMake(3);
-        ItemManager(map).itemToMap(item1);
-        break;
-        }
-
-        case GROWTH:{
-        Pos newTail = snake.getTailCoord();
-        switch (direction) {
-        case UP: newTail.setPos(newTail.getX(), newTail.getY() + 1); break;
-        case DOWN: newTail.setPos(newTail.getX(), newTail.getY() - 1); break;
-        case LEFT: newTail.setPos(newTail.getX() + 1, newTail.getY()); break;
-        case RIGHT: newTail.setPos(newTail.getX() - 1, newTail.getY()); break;
-        }
-        snake.getBody().push_back(newTail);
-        Item newItem = ItemManager(map).itemMake(1);
-        ItemManager(map).itemToMap(item1);
-        break;
-        }
-
-        case 1:{
-        gameOver();
-        return;
-        }
-        
-        default:
-        break;
-    }
-    Pos tail = snake.getTailCoord();
+void GameProcess::moveSnake() {
+    Coord tail = snake.getTailCoord();
     map.setCoordToValue(tail.getX(), tail.getY(), 0);
     snake.move();
-    setSnake();
 }
 
-void GameProcess::keyInput() {
-    int ch;
-    while (!isGameOver) {
-        ch = getch();
-        if (ch != ERR) {
-            keyPressed = true;
-            switch (ch) {
-                case KEY_UP:
-                    if (direction != DOWN) direction = UP;
-                    break;
-                case KEY_DOWN:
-                    if (direction != UP) direction = DOWN;
-                    break;
-                case KEY_LEFT:
-                    if (direction != RIGHT) direction = LEFT;
-                    break;
-                case KEY_RIGHT:
-                    if (direction != LEFT) direction = RIGHT;
-                    break;
-            }
-            snake.insertDirection(direction);
-        } else {
-            keyPressed = false;
-        }
-        std::this_thread::sleep_for(std::chrono::milliseconds(10));
+void GameProcess::replaceItemIfMatch(Item& item, Coord& nextHead) {
+    if (nextHead.getCoord() == item.getCoord()) {
+        item = im.itemMake();
+        im.itemToMap(item);
     }
 }
 
-void GameProcess::gameLoop() {
-    std::thread inputThread(&GameProcess::keyInput, this);
+void GameProcess::itemUpdate(StageManager& stageManager, Coord nextHead, int type) {
+    switch (type) {
+        case POISON:
+            processPoisonItem(stageManager, nextHead);
+            break;
+        case GROWTH:
+            processGrowthItem(stageManager, nextHead);
+            break;
+    }
+}
 
-    while (!isGameOver) {
-        update();
-        render();
-        this_thread::sleep_for(chrono::milliseconds(500));
+void GameProcess::gateUpdate(StageManager& stageManager, Coord nextHead) {
+    gateUsing =true;
+    map.setCoordToValue(snake.getBody().back().getX(), snake.getBody().back().getY(), 0);
+    snake.getBody().pop_back();
+    if (nextHead == gate1.getCoord()){
+        Coord newHead = validDirection(gate2.getCoord());
+        snake.getBody().push_front(newHead);
+    }
+    if (nextHead == gate2.getCoord()){
+        Coord newHead = validDirection(gate1.getCoord());
+        snake.getBody().push_front(newHead);
+    }
+    stageManager.updateMissionStatus(3, 1);
+    stageManager.updateNowScore(snake, 3);
+}
+
+Coord GameProcess::validDirection(Coord gateCoord) {
+    int x = gateCoord.getX();
+    int y = gateCoord.getY();
+    int h = map.getHeight();
+    int w = map.getWidth();
+
+    const int dx[] = {0, 1, 0, -1}; // UP, RIGHT, DOWN, LEFT
+    const int dy[] = {-1, 0, 1, 0}; // UP, RIGHT, DOWN, LEFT
+    const int directions[] = {UP, RIGHT, DOWN, LEFT};
+
+    if (x == w - 1) {
+        setDirection(LEFT);
+        return Coord(x - 1, y);
+    } else if (x == 0) {
+        setDirection(RIGHT);
+        return Coord(x + 1, y);
+    } else if (y == h - 1) {
+        setDirection(UP);
+        return Coord(x, y - 1);
+    } else if (y == 0) {
+        setDirection(DOWN);
+        return Coord(x, y + 1);
+    }
+
+    int startIdx;
+    switch (direction) {
+        case UP: startIdx = 0; break;
+        case RIGHT: startIdx = 1; break;
+        case DOWN: startIdx = 2; break;
+        case LEFT: startIdx = 3; break;
+    }
+
+    int newX = x + dx[startIdx];
+    int newY = y + dy[startIdx];
+    if (map.getMapValue(newX, newY) != WALL && map.getMapValue(newX, newY) != IMMUNE) {
+        return Coord(newX, newY);
+    }
+
+    newX = x + dx[(startIdx + 1) % 4];
+    newY = y + dy[(startIdx + 1) % 4];
+    if (map.getMapValue(newX, newY) != WALL && map.getMapValue(newX, newY) != IMMUNE) {
+        setDirection(directions[(startIdx + 1) % 4]);
+        return Coord(newX, newY);
+    }
+
+    newX = x + dx[(startIdx + 3) % 4];
+    newY = y + dy[(startIdx + 3) % 4];
+    if (map.getMapValue(newX, newY) != WALL && map.getMapValue(newX, newY) != IMMUNE) {
+        setDirection(directions[(startIdx + 3) % 4]);
+        return Coord(newX, newY);
+    }
+
+    newX = x + dx[(startIdx + 2) % 4];
+    newY = y + dy[(startIdx + 2) % 4];
+    if (map.getMapValue(newX, newY) != WALL && map.getMapValue(newX, newY) != IMMUNE) {
+        setDirection(directions[(startIdx + 2) % 4]);
+        return Coord(newX, newY);
+    }
+
+    return Coord();
+}
+
+void GameProcess::processPoisonItem(StageManager& stageManager, Coord nextHead) {
+    Coord delTail = snake.getTailCoord();
+    map.setCoordToValue(delTail.getX(), delTail.getY(), 0);
+    snake.getBody().pop_back();
+
+    replaceItemIfMatch(item1, nextHead);
+    replaceItemIfMatch(item2, nextHead);
+    replaceItemIfMatch(item3, nextHead);
+
+    stageManager.updateMissionStatus(2, 1);
+    stageManager.updateNowScore(snake, 2);
+}
+
+void GameProcess::processGrowthItem(StageManager& stageManager, Coord nextHead) {
+    replaceItemIfMatch(item1, nextHead);
+    replaceItemIfMatch(item2, nextHead);
+    replaceItemIfMatch(item3, nextHead);
+
+    stageManager.updateMissionStatus(1, 1);
+    stageManager.updateNowScore(snake, 1);
+}
+
+void GameProcess::gameLoop(StageManager& sm, UIManager& um) {
+    std::thread inputThread([&](){ um.keyInput(*this, snake); });
+
+    initStage(sm);
+
+    while (true) {
+        update(sm, um);
+        im.checkItemCycle(item1, item2, item3);
+        if(!(gateUsing)) gm.checkGateCycle(gate1, gate2);
+        um.render(map);
+        um.showMissionState(map, sm);
+        um.showStage(sm, map);
+        std::this_thread::sleep_for(std::chrono::milliseconds(350));
     }
     inputThread.join();
 }
 
-void GameProcess::gameOver() {
-    isGameOver = true;
-    mvprintw(10, 6, "Game Over~!");
-    refresh();
-    nodelay(stdscr, FALSE);
-    getch();
-    endwin();
+// 접근자 설정자
+int GameProcess::getDirection() {
+    return direction;
+}
+void GameProcess::setDirection(int dir) {
+    snake.insertDirection(dir);
+    direction = dir;
 }
