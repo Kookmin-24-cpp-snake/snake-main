@@ -41,6 +41,7 @@ public :
     int getNowScore();
     void setNowScore(int score);
     void updateNowScore(Snake& snake, int scoreType);
+    void initPlayTime();
     int getPlayTime();
 
 };

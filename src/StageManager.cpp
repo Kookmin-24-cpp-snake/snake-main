@@ -82,6 +82,10 @@ int StageManager::getPlayTime() {
     return playTime;
 }
 
+void StageManager::initPlayTime() {
+    playTime = 0;
+}
+
 
 void StageManager::updateNowScore(Snake& snake, int scoreType) {
     switch(scoreType) {
@@ -97,7 +101,7 @@ void StageManager::updateNowScore(Snake& snake, int scoreType) {
         case 3: // gate
             nowScore += (nowStage+1)*3;
             break;
-        case 4:
+        case 4: // 시간
             playTime++;
             if(playTime%3 == 0) { nowScore++; }
         default:

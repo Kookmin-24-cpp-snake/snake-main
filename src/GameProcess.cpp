@@ -21,6 +21,7 @@ void GameProcess::initializeStage(int stageNum) {
 
 void GameProcess::initStage(StageManager& stageManager) {
     int stage = stageManager.getNowStage();
+    stageManager.initPlayTime();
     snake = Snake(Coord(4, 1), 3, RIGHT);
     direction = RIGHT;
     stageManager.initNowStage(snake);
