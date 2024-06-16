@@ -8,6 +8,11 @@ void GateManager::GateToMap(const Gate& gate){
     map.setCoordToValue(gate.getCoord().getX(), gate.getCoord().getY(), GATE);
 }
 
+void GateManager::setGatesOnMap(Gate& gate1, Gate& gate2) {
+    GateToMap(gate1);
+    GateToMap(gate2);
+}
+
 void GateManager::GateDelete(const Gate& gate) {
     map.setCoordToValue(gate.getCoord().getX(), gate.getCoord().getY(), 1);
 }
@@ -28,4 +33,19 @@ Gate GateManager::GateMake() {
 
 Coord GateManager::getGateCoord(const Gate& gate) {
     return gate.getCoord();
+}
+
+void GateManager::checkGateCycle(Gate& gate1, Gate& gate2) {
+    time_t present = time(nullptr);
+    checkGateTimeout(gate1, present);
+    checkGateTimeout(gate2, present);
+}
+
+void GateManager::checkGateTimeout(Gate& gate, time_t present) {
+    int timeDifference = static_cast<int>(present - gate.getTime());
+    if (timeDifference > 10) {
+        GateDelete(gate);
+        gate = GateMake();
+        GateToMap(gate);
+    }
 }

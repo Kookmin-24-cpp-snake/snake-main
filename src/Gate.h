@@ -9,7 +9,7 @@ class Gate{
     time_t makedTime;
 public:
     Gate(Coord gatePos);
-    Gate(int x = 0, int y = 0);
+    Gate(int x = 1, int y = 0);
     Coord getCoord() const;
     time_t getTime() const;
 };

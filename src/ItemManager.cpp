@@ -15,6 +15,12 @@ void ItemManager::itemToMap(const Item& item){
     map.setCoordToValue(item.getCoord().getX(), item.getCoord().getY(), item.getType());
 }
 
+void ItemManager::setItemsOnMap(Item& item1, Item& item2, Item& item3) {
+    itemToMap(item1);
+    itemToMap(item2);
+    itemToMap(item3);
+}
+
 void ItemManager::itemDelete(const Item& item) {
     map.setCoordToValue(item.getCoord().getX(), item.getCoord().getY(), 0);
 }
@@ -36,4 +42,20 @@ Item ItemManager::itemMake() {
 
 Coord ItemManager::getItemCoord(const Item& item) {
     return item.getCoord();
+}
+
+void ItemManager::checkItemCycle(Item& item1, Item& item2, Item& item3) {
+    time_t present = time(nullptr);
+    checkItemTimeout(item1, present);
+    checkItemTimeout(item2, present);
+    checkItemTimeout(item3, present);
+}
+
+void ItemManager::checkItemTimeout(Item& item, time_t present) {
+    int timeDifference = static_cast<int>(present - item.getTime());
+    if (timeDifference > 10) {
+        itemDelete(item);
+        item = itemMake();
+        itemToMap(item);
+    }
 }

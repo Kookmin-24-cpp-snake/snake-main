@@ -17,8 +17,11 @@ class ItemManager{
 public:
     ItemManager(Map& map);
     void itemToMap(const Item& item);
+    void setItemsOnMap(Item& item1, Item& item2, Item& item3);
     void itemDelete(const Item& item);
     Item itemMake();
     Coord getItemCoord(const Item& item);
+    void checkItemCycle(Item& item1, Item& item2, Item& item3);
+    void checkItemTimeout(Item& item, time_t present);
 };
 #endif

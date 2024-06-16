@@ -41,6 +41,21 @@ std::string Map::loadMap(){
     return total;
 }
 
+std::string Map::getStageDirectory(int stage) {
+    switch (stage) {
+        case 1:
+            return "map/map1.txt";
+        case 2:
+            return "map/map2.txt";
+        case 3:
+            return "map/map3.txt";
+        case 4:
+            return "map/map4.txt";
+        default:
+            return "map/map1.txt";
+    }
+}
+
 void Map::setMap(){
     std::string mapResource = loadMap();
     map = new int*[height + 1];

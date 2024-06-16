@@ -11,16 +11,13 @@ GameProcess::GameProcess(int stageNum)
 }
 
 void GameProcess::initializeStage(int stageNum) {
-    std::string dir = getStageDirectory(stageNum);
+    std::string dir = map.getStageDirectory(stageNum);
     map.setDirectory(dir);
     map.setMap();
     setSnake();
-    item1 = im.itemMake();
-    item2 = im.itemMake();
-    item3 = im.itemMake();
-    gate1 = Gate();
-    gate2 = Gate();
-    setItemsOnMap();
+    item1 = im.itemMake(); item2 = im.itemMake(); item3 = im.itemMake();
+    gate1 = Gate(); gate2 = Gate();
+    im.setItemsOnMap(item1, item2, item3);
 }
 
 void GameProcess::initStage(StageManager& stageManager) {
@@ -31,45 +28,11 @@ void GameProcess::initStage(StageManager& stageManager) {
     initializeStage(stage + 1);
 }
 
-std::string GameProcess::getStageDirectory(int stage) {
-    switch (stage) {
-        case 1:
-            return "map/map1.txt";
-        case 2:
-            return "map/map2.txt";
-        case 3:
-            return "map/map3.txt";
-        case 4:
-            return "map/map4.txt";
-        default:
-            return "map/map1.txt";
-    }
-}
-
 void GameProcess::setSnake() {
     for (const Coord &part : snake.getBody()) {
         map.setCoordToValue(part.getX(), part.getY(), TAIL);
     }
     map.setCoordToValue(snake.getHeadCoord().getX(), snake.getHeadCoord().getY(), HEAD);
-}
-
-void GameProcess::setItemsOnMap() {
-    setItemOnMap(item1);
-    setItemOnMap(item2);
-    setItemOnMap(item3);
-}
-
-void GameProcess::setItemOnMap(const Item& item) {
-    map.setCoordToValue(item.getCoord().getX(), item.getCoord().getY(), item.getType());
-}
-
-void GameProcess::setGatesOnMap() {
-    setGateOnMap(gate1);
-    setGateOnMap(gate2);
-}
-
-void GameProcess::setGateOnMap(const Gate& gate) {
-    map.setCoordToValue(gate.getCoord().getX(), gate.getCoord().getY(), GATE);
 }
 
 void GameProcess::update(StageManager& stageManager, UIManager& um) {
@@ -125,45 +88,12 @@ void GameProcess::update(StageManager& stageManager, UIManager& um) {
     }
 
     if (--gateSup == 0) gateUsing = false;
-
-
 }
 
 void GameProcess::moveSnake() {
     Coord tail = snake.getTailCoord();
     map.setCoordToValue(tail.getX(), tail.getY(), 0);
     snake.move();
-}
-
-void GameProcess::checkItemCycle() {
-    time_t present = time(nullptr);
-    checkItemTimeout(item1, present);
-    checkItemTimeout(item2, present);
-    checkItemTimeout(item3, present);
-}
-
-void GameProcess::checkItemTimeout(Item& item, time_t present) {
-    int timeDifference = static_cast<int>(present - item.getTime());
-    if (timeDifference > 10) {
-        im.itemDelete(item);
-        item = im.itemMake();
-        im.itemToMap(item);
-    }
-}
-
-void GameProcess::checkGateCycle() {
-    time_t present = time(nullptr);
-    checkGateTimeout(gate1, present);
-    checkGateTimeout(gate2, present);
-}
-
-void GameProcess::checkGateTimeout(Gate& gate, time_t present) {
-    int timeDifference = static_cast<int>(present - gate.getTime());
-    if (timeDifference > 10 && !(gateUsing)) {
-        gm.GateDelete(gate);
-        gate = gm.GateMake();
-        gm.GateToMap(gate);
-    }
 }
 
 void GameProcess::replaceItemIfMatch(Item& item, Coord& nextHead) {
@@ -200,110 +130,66 @@ void GameProcess::gateUpdate(StageManager& stageManager, Coord nextHead) {
     stageManager.updateNowScore(snake, 3);
 }
 
-Coord GameProcess::validDirection(Coord gateCoord){
-    int x = gateCoord.getX(); int y = gateCoord.getY();
-    int h = map.getHeight(); int w = map.getWidth();
+Coord GameProcess::validDirection(Coord gateCoord) {
+    int x = gateCoord.getX();
+    int y = gateCoord.getY();
+    int h = map.getHeight();
+    int w = map.getWidth();
+
+    const int dx[] = {0, 1, 0, -1}; // UP, RIGHT, DOWN, LEFT
+    const int dy[] = {-1, 0, 1, 0}; // UP, RIGHT, DOWN, LEFT
+    const int directions[] = {UP, RIGHT, DOWN, LEFT};
+
     if (x == w - 1) {
         setDirection(LEFT);
         return Coord(x - 1, y);
-    }
-    else if (x == 0){
+    } else if (x == 0) {
         setDirection(RIGHT);
         return Coord(x + 1, y);
-    }
-    else if (y == h - 1){
+    } else if (y == h - 1) {
         setDirection(UP);
         return Coord(x, y - 1);
-    }
-    else if (y == 0){
+    } else if (y == 0) {
         setDirection(DOWN);
         return Coord(x, y + 1);
     }
-    else{
-        if (direction == UP){
-            if (map.getMapValue(x, y - 1) != WALL
-            && map.getMapValue(x, y - 1) != IMMUNE) return Coord(x, y - 1);
-            else if (map.getMapValue(x + 1, y) != WALL
-            && map.getMapValue(x + 1, y) != IMMUNE){
-                setDirection(RIGHT);
-                return Coord(x + 1, y);
-            }
-            else if (map.getMapValue(x - 1, y) != WALL
-            && map.getMapValue(x - 1, y) != IMMUNE) {
-                setDirection(LEFT);
-                return Coord(x - 1, y);
-            }
-            else if (map.getMapValue(x, y + 1) != WALL
-            && map.getMapValue(x, y + 1) != IMMUNE){
-                setDirection(DOWN);
-                return Coord(x, y + 1);
-            }
-            else return Coord();
-        }
 
-        else if (direction == DOWN){
-            if (map.getMapValue(x, y + 1) != WALL
-            && map.getMapValue(x, y + 1) != IMMUNE) return Coord(x, y + 1);
-            else if (map.getMapValue(x - 1, y) != WALL\
-            && map.getMapValue(x - 1, y) != IMMUNE){
-                setDirection(LEFT);
-                return Coord(x - 1, y);
-            }
-            else if (map.getMapValue(x + 1, y) != WALL
-            && map.getMapValue(x + 1, y) != IMMUNE) {
-                setDirection(RIGHT);
-                return Coord(x + 1, y);
-            }
-            else if (map.getMapValue(x, y - 1) != WALL
-            && map.getMapValue(x, y - 1) != IMMUNE){
-                setDirection(UP);
-                return Coord(x, y - 1);
-            }
-            else return Coord();
-        }
-
-        else if (direction == LEFT){
-            if (map.getMapValue(x - 1, y) != WALL
-            && map.getMapValue(x - 1, y) != IMMUNE) return Coord(x - 1, y);
-            else if (map.getMapValue(x, y - 1) != WALL
-            && map.getMapValue(x, y - 1) != IMMUNE){
-                setDirection(UP);
-                return Coord(x, y - 1);
-            }
-            else if (map.getMapValue(x, y + 1) != WALL
-            && map.getMapValue(x, y + 1) != IMMUNE) {
-                setDirection(DOWN);
-                return Coord(x, y + 1);
-            }
-            else if (map.getMapValue(x + 1, y) != WALL
-            && map.getMapValue(x + 1, y) != IMMUNE) {
-                setDirection(RIGHT);
-                return Coord(x + 1, y);
-            }
-            else return Coord();
-        }
-
-        else{
-            if (map.getMapValue(x + 1, y) != WALL
-            && map.getMapValue(x + 1, y) != IMMUNE) return Coord(x + 1, y);
-            else if (map.getMapValue(x, y + 1) != WALL
-            && map.getMapValue(x, y + 1) != IMMUNE) {
-                setDirection(DOWN);
-                return Coord(x, y + 1);
-            }
-            else if (map.getMapValue(x, y - 1) != WALL
-            && map.getMapValue(x, y - 1) != IMMUNE){
-                setDirection(UP);
-                return Coord(x, y - 1);
-            }
-            else if (map.getMapValue(x - 1, y) != WALL
-            && map.getMapValue(x - 1, y) != IMMUNE) {
-                setDirection(LEFT);
-                return Coord(x - 1, y);
-            }
-            else return Coord();
-        }
+    int startIdx;
+    switch (direction) {
+        case UP: startIdx = 0; break;
+        case RIGHT: startIdx = 1; break;
+        case DOWN: startIdx = 2; break;
+        case LEFT: startIdx = 3; break;
     }
+
+    int newX = x + dx[startIdx];
+    int newY = y + dy[startIdx];
+    if (map.getMapValue(newX, newY) != WALL && map.getMapValue(newX, newY) != IMMUNE) {
+        return Coord(newX, newY);
+    }
+
+    newX = x + dx[(startIdx + 1) % 4];
+    newY = y + dy[(startIdx + 1) % 4];
+    if (map.getMapValue(newX, newY) != WALL && map.getMapValue(newX, newY) != IMMUNE) {
+        setDirection(directions[(startIdx + 1) % 4]);
+        return Coord(newX, newY);
+    }
+
+    newX = x + dx[(startIdx + 3) % 4];
+    newY = y + dy[(startIdx + 3) % 4];
+    if (map.getMapValue(newX, newY) != WALL && map.getMapValue(newX, newY) != IMMUNE) {
+        setDirection(directions[(startIdx + 3) % 4]);
+        return Coord(newX, newY);
+    }
+
+    newX = x + dx[(startIdx + 2) % 4];
+    newY = y + dy[(startIdx + 2) % 4];
+    if (map.getMapValue(newX, newY) != WALL && map.getMapValue(newX, newY) != IMMUNE) {
+        setDirection(directions[(startIdx + 2) % 4]);
+        return Coord(newX, newY);
+    }
+
+    return Coord();
 }
 
 void GameProcess::processPoisonItem(StageManager& stageManager, Coord nextHead) {
@@ -335,8 +221,8 @@ void GameProcess::gameLoop(StageManager& sm, UIManager& um) {
 
     while (true) {
         update(sm, um);
-        checkItemCycle();
-        checkGateCycle();
+        im.checkItemCycle(item1, item2, item3);
+        if(!(gateUsing)) gm.checkGateCycle(gate1, gate2);
         um.render(map);
         um.showMissionState(map, sm);
         um.showStage(sm, map);

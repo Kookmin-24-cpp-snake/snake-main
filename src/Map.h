@@ -19,6 +19,7 @@ public:
     ~Map();
     void setDirectory(const std::string& directory);
     std::string loadMap();
+    std::string getStageDirectory(int stage);
     void setMap();
     void setCoordToValue(int x, int y, int value);
     int getMapValue(int x, int y);
