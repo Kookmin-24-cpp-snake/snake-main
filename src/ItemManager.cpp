@@ -26,18 +26,23 @@ void ItemManager::itemDelete(const Item& item) {
 }
 
 Item ItemManager::itemMake() {
-        int random, x, y;
-        int h = map.getHeight();
-        int w = map.getWidth();
-        std::vector<std::pair<int, int>> emptyCoords = map.emptyCoords();
+    int random, x, y;
+    int h = map.getHeight();
+    int w = map.getWidth();
+    std::vector<std::pair<int, int>> emptyCoords = map.emptyCoords();
 
-        std::pair<int, int> pos = emptyCoords[rand() % emptyCoords.size()];
-        x = pos.first;
-        y = pos.second;
+    std::pair<int, int> pos = emptyCoords[rand() % emptyCoords.size()];
+    x = pos.first;
+    y = pos.second;
 
-        random = rand() % 2;
-
-        return Item(POISON + random, x, y);
+    random = rand() % 100;
+    if (random < 10) { 
+        return Item(RANDOM, x, y);
+    } else if (random < 55) { 
+        return Item(GROWTH, x, y);
+    } else {
+        return Item(POISON, x, y);
+    }
 }
 
 Coord ItemManager::getItemCoord(const Item& item) {

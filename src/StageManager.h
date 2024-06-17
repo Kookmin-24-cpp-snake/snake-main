@@ -9,11 +9,13 @@
 
 class StageManager {
 private :
-    int nowScore; // 현재 점수
-    int nowStage; // 현재 스테이지
+    int nowScore; 
+    int nowStage; 
+    int playTime = 0;
 
-    int missionStatus[4]; // 현재 스테이지에서의 미션 상태
-    bool isMissionClear[4]; // 현재 스테이지에서의 미션 클리어 여부
+
+    int missionStatus[4]; 
+    bool isMissionClear[4]; 
 
     Stage stage;
 public :
@@ -39,7 +41,8 @@ public :
     int getNowScore();
     void setNowScore(int score);
     void updateNowScore(Snake& snake, int scoreType);
-
+    void initPlayTime();
+    int getPlayTime();
 
 };
 #endif

@@ -27,13 +27,14 @@ public:
     int direction;
     int gateSup;
     bool gateUsing;
+    std::chrono::time_point<std::chrono::steady_clock> lastUpdateTime;
 public:
     GameProcess(int stageNum = 1);
     void initializeStage(int stageNum);
     int getDirection();
     void setDirection(int dir);
     void setSnake();
-    void initStage(StageManager& stageManager);
+    void initStage(StageManager& stageManager); 
     void moveSnake();
     void update(StageManager& sm, UIManager& um);
     void itemUpdate(StageManager& stageManager, Coord nextHead, int type);
@@ -43,5 +44,7 @@ public:
     void replaceItemIfMatch(Item& item, Coord& nextHead);
     void processPoisonItem(StageManager& stageManager, Coord nextHead);
     void processGrowthItem(StageManager& stageManager, Coord nextHead);
+    void RandomFeverTime();
+    void clearAndResetItems();
 };
 #endif

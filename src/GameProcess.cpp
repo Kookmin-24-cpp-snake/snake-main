@@ -21,18 +21,30 @@ void GameProcess::initializeStage(int stageNum) {
 
 void GameProcess::initStage(StageManager& stageManager) {
     int stage = stageManager.getNowStage();
+    stageManager.initPlayTime();
     snake = Snake(Coord(4, 1), 3, RIGHT);
     direction = RIGHT;
     stageManager.initNowStage(snake);
     initializeStage(stage + 1);
+    lastUpdateTime = std::chrono::steady_clock::now();
 }
+
 
 void GameProcess::setSnake() {
     for (const Coord &part : snake.getBody()) map.setCoordToValue(part.getX(), part.getY(), TAIL);
     map.setCoordToValue(snake.getHeadCoord().getX(), snake.getHeadCoord().getY(), HEAD);
 }
-
+ 
 void GameProcess::update(StageManager& stageManager, UIManager& um) {
+
+    auto currentTime = std::chrono::steady_clock::now();
+    auto duration = std::chrono::duration_cast<std::chrono::seconds>(currentTime - lastUpdateTime);
+
+    if (duration.count() >= 1) {
+        stageManager.updateNowScore(snake, 4);
+        lastUpdateTime = currentTime;
+    }
+
     if (stageManager.checkMissionClear()) {
         if (stageManager.getNowStage() == 3) {
             bool isReplay = um.showGameClearPrompt();
@@ -69,6 +81,10 @@ void GameProcess::update(StageManager& stageManager, UIManager& um) {
         Coord newTail = snake.getTailCoord();
         snake.getBody().push_back(newTail);
         setSnake();
+    } else if (mapValue == RANDOM) {
+        moveSnake();
+        setSnake();
+        RandomFeverTime();
     } else if (mapValue == GATE){
         gateSup = snake.getBodyLen();
         gateUpdate(stageManager, nextHead);
@@ -102,6 +118,48 @@ void GameProcess::itemUpdate(StageManager& stageManager, Coord nextHead, int typ
             processGrowthItem(stageManager, nextHead);
             break;
     }
+}
+
+
+void GameProcess::RandomFeverTime() {
+    int totalCells = map.getHeight() * map.getWidth();
+    int cellsToFill = totalCells * 0.05;
+
+    bool GorF = rand() % 2;
+    int putted = (GorF ? GROWTH : POISON);
+
+    while (cellsToFill > 0) {
+        int x = rand() % map.getWidth();
+        int y = rand() % map.getHeight();
+
+        if (map.getMapValue(x, y) == 0) { 
+            map.setCoordToValue(x, y, putted);
+            cellsToFill--;
+        }
+    }
+    Coord nextHead = snake.nextHead();
+    moveSnake();
+    setSnake();
+
+    std::thread clearItemsThread(&GameProcess::clearAndResetItems, this);
+    clearItemsThread.detach();
+}
+
+
+void GameProcess::clearAndResetItems() {
+    std::this_thread::sleep_for(std::chrono::seconds(5));
+
+    for (int y = 0; y < map.getHeight(); ++y) {
+        for (int x = 0; x < map.getWidth(); ++x) {
+            if (map.getMapValue(x, y) == GROWTH || map.getMapValue(x, y) == POISON) {
+                map.setCoordToValue(x, y, 0);
+            }
+        }
+    }
+    item1 = im.itemMake();
+    item2 = im.itemMake();
+    item3 = im.itemMake();
+    im.setItemsOnMap(item1, item2, item3);
 }
 
 void GameProcess::gateUpdate(StageManager& stageManager, Coord nextHead) {
