@@ -76,7 +76,7 @@ void UIManager::render(Map& map) {
                     mvwaddch(stdscr, i, j, '@' | COLOR_PAIR(4));
                     break;
                 case RANDOM:
-                    mvwaddch(stdscr, i, j, '?' | COLOR_PAIR(COLOR_WHITE));
+                    mvwaddch(stdscr, i, j, '?' | COLOR_PAIR(5));
                     break;
                 default:
                     mvwaddch(stdscr, i, j, ' ' | COLOR_PAIR(1));
