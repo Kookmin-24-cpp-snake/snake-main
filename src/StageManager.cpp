@@ -10,7 +10,6 @@ StageManager::StageManager() : nowStage(0), nowScore(0) {
     }
 }
 
-// 현재 스테이지의 미션 상태 배열 반환
 int* StageManager::getMissionStatus() {
     return missionStatus;
 }
@@ -27,7 +26,6 @@ bool StageManager::checkMissionClear() {
     return isCleared;
 }
 
-// 현재 스테이지의 미션 수행 상태 갱신
 void StageManager::updateMissionStatus(int missionType, int value) {
     switch(missionType) {
         case 1: missionStatus[1] += value; missionStatus[0] += 1; break;
@@ -43,13 +41,11 @@ void StageManager::updateIsMissionClear() {
             isMissionClear[missionType] = true;
         }
         else {
-            isMissionClear[missionType] = false; // 게이트 미션 클리어 여부 초기화
+            isMissionClear[missionType] = false; 
         }
     }
 }
 
-
-// 현재 스테이지의 미션 상태 초기화
 void StageManager::initNowStage(Snake& snake) {
     nowScore = 0;
 

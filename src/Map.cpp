@@ -1,7 +1,6 @@
 /**
  * @file Map.cpp
  * @author hyeoksu
- * @brief 임시 class Map의 소스파일입니다.
  * @date 2024-05-18
  */
 
@@ -20,19 +19,14 @@ std::string Map::loadMap(){
      * 파일의 내용을 전부 읽어 total에 저장.
      */
 	if(file.is_open()){
-		//위치 지정자를 파일 끝으로 옮긴다.
         file.seekg(0, std::ios::end);
 		
-		// 그리고 그 위치를 읽는다. (파일의 크기)
 		int size = file.tellg();
 
-		// 그 크기의 문자열을 할당한다.
 		total.resize(size);
 
-		// 위치 지정자를 다시 파일 맨 앞으로 옮긴다.
 		file.seekg(0, std::ios::beg);
 
-		// 파일 전체 내용을 읽어서 문자열에 저장
 		file.read(&total[0], size);
 	}
     else{

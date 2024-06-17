@@ -2,7 +2,6 @@
  * @file Map.h
  * @author hyeoksu
  * @brief 
- * ItemManager 구현을 위해 임시로 만든 Map의 헤더파일입니다.
  * @date 2024-05-18
  */
 #ifndef __MAP__

@@ -130,8 +130,7 @@ bool UIManager::stopOrPlay(StageManager& stageManager) {
         ch = getch();
         if (ch != ERR) {
             if (ch == 'y' || ch == 'Y') {
-                // 다음 스테이지로 진행
-                mvprintw(15, 26, "                                     "); // 메시지 삭제
+                mvprintw(15, 26, "                                     "); 
                 mvprintw(16, 26, "                                                                         ");
                 mvprintw(17, 26, "                                                                         ");
 

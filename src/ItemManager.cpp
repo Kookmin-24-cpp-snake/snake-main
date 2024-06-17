@@ -36,9 +36,9 @@ Item ItemManager::itemMake() {
     y = pos.second;
 
     random = rand() % 100;
-    if (random < 55) { 
+    if (random < 10) { 
         return Item(RANDOM, x, y);
-    } else if (random < 90) { 
+    } else if (random < 55) { 
         return Item(GROWTH, x, y);
     } else {
         return Item(POISON, x, y);
