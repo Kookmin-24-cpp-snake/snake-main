@@ -35,6 +35,8 @@
 > * 그러면 위와 같이 compare & pull request라는게 나온다. 클릭해준다.
 > ![Pullrequest](PR2.png)
 > * 이런 창이 뜨는데 여기에 PULL_REQUEST_TEMPLETE.md에 있는 템플릿을 이용해 PR을 작성한다.
+> * 주의 : base와 compare 부분을 확인해줘야 한다.
+>   - develop <- working branch, master <- develop 순으로 merge하는 것을 원칙으로 한다.
 > ![Pullrequest](PR3.png)
 > * 스크롤을 내려주면 코드 변경점도 같이 볼 수 있다.
 > * 다 작성한 뒤 Create pull request를 클릭해준다.
@@ -60,9 +62,9 @@
 > * git merge develop
 > * 그러면 충돌이 발생한 곳이 표시됨.
 > * 팀원과 의논하여 병합할 방법을 선택한다.
-git add .
-git commit "commitname"
-git push origin feacherA
+> * git add .
+> * git commit "commitname"
+> * git push origin feacherA
 > * 이 후 다시 Merge pull request 시도
 
 ## git 명령어 모음
@@ -259,3 +261,8 @@ printw 함수 출력전 속성을 키고 끄는 함수이다. 인자로 COLOR_PA
 
 </div>
 </details>
+
+# 제가 md파일이랑 html을 처음 만져봐서 많이 안이쁘네요.
+# 가독성도 많이 떨어져보이긴 한데 제가 영 센스가 없어서...
+# 하면서 이거 봐도 이해 안되는 부분 있으면 언제든 얘기해주세요
+# 답은 못해드려도 고민은 같이 해볼게요...
